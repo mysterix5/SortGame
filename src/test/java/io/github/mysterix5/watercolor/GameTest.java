@@ -7,7 +7,7 @@ class GameTest {
     @Test
     void createDummyGame() {
         Game game = new Game();
-        var field = game.createDummyGame();
-        System.out.println(field);
+        game.createDummyGame();
+        System.out.println(game);
     }
 }

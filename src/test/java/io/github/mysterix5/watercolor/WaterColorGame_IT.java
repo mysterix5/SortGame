@@ -16,10 +16,10 @@ public class WaterColorGame_IT {
 
     @Test
     public void integrationTest(){
-        ResponseEntity<WaterColorBottle[]> response;
+        ResponseEntity<Bottle[]> response;
 
         // initial get todos via api should be empty
-        response = restTemplate.getForEntity("/api/game", WaterColorBottle[].class);
+        response = restTemplate.getForEntity("/api/game", Bottle[].class);
         System.out.println(Arrays.toString(response.getBody()));
     }
 }

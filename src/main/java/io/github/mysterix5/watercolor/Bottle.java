@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class WaterColorBottle {
-    private List<WaterColorEnum> colorList = new ArrayList<>();
+public class Bottle {
+    private List<Color> colorList = new ArrayList<>();
     public static final int size = 4;
 
     @Override
@@ -17,7 +17,11 @@ public class WaterColorBottle {
                 '}';
     }
 
-    public void addColor(WaterColorEnum color){
+    public Color getTop(){
+        return !isEmpty() ? colorList.get(colorList.size()-1) : null;
+    }
+
+    public void addColor(Color color){
         if(isFull()) throw new RuntimeException("cant add another color to this bottle");
         colorList.add(color);
     }
@@ -33,12 +37,16 @@ public class WaterColorBottle {
         if(!isFull()){
             return false;
         }
-        WaterColorEnum color = colorList.get(0);
+        Color color = colorList.get(0);
         for(var c: colorList){
             if(c!=color){
                 return false;
             }
         }
         return true;
+    }
+
+    public Color pop() {
+        return !isEmpty() ? colorList.remove(colorList.size()-1) : null;
     }
 }

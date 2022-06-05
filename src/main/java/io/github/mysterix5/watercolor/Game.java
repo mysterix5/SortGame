@@ -4,16 +4,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game {
+    private final PlayingField playingField = new PlayingField();
 
     // TODO do not allow two times the same color on each other
     // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program
     // TODO this is probably not solvable
-    public List<WaterColorBottle> createDummyGame(){
-        List<WaterColorEnum> colorChoices = Arrays.stream(WaterColorEnum.values()).collect(Collectors.toList());
+    public void createDummyGame(){
+        List<Color> colorChoices = Arrays.stream(Color.values()).collect(Collectors.toList());
         List<Integer> colorStock = new ArrayList<>(colorChoices.size());
-        List<WaterColorBottle> bottles = new ArrayList<>(colorChoices.size());
+        List<Bottle> bottles = new ArrayList<>(colorChoices.size());
         for(int i = 0; i<colorChoices.size(); i++){
-            bottles.add(new WaterColorBottle());
+            bottles.add(new Bottle());
             colorStock.add(0);
         }
 
@@ -32,12 +33,7 @@ public class Game {
             }
         }
 
-        return bottles;
-    }
-
-    public boolean gameWon(){
-
-        return false;
+        this.playingField.setBottles(bottles);
     }
 
     // TODO save for hint?
@@ -49,6 +45,26 @@ public class Game {
         how storage
      */
     public boolean isSolvable(){
+        if(isWon()){
+            return true;
+        }
+
         return false;
     }
+
+    public boolean isWon() {
+        return playingField.isWon();
+    }
+
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "playingField=" + playingField +
+                '}';
+    }
+
 }
