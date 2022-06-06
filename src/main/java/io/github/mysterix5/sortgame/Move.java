@@ -1,4 +1,4 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

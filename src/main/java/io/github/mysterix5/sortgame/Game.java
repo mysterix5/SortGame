@@ -1,4 +1,4 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,9 +12,9 @@ public class Game {
     public void createDummyGame(){
         List<Color> colorChoices = Arrays.stream(Color.values()).collect(Collectors.toList());
         List<Integer> colorStock = new ArrayList<>(colorChoices.size());
-        List<Bottle> bottles = new ArrayList<>(colorChoices.size());
+        List<Container> containers = new ArrayList<>(colorChoices.size());
         for(int i = 0; i<colorChoices.size(); i++){
-            bottles.add(new Bottle());
+            containers.add(new Container());
             colorStock.add(0);
         }
 
@@ -27,13 +27,13 @@ public class Game {
             if(colorStock.get(color.ordinal())>=4){
                 colorChoices.remove(color);
             }
-            bottles.get(bottleIndex).addColor(color);
-            if(bottles.get(bottleIndex).isFull()){
+            containers.get(bottleIndex).addColor(color);
+            if(containers.get(bottleIndex).isFull()){
                 bottleIndex++;
             }
         }
 
-        this.playingField.setBottles(bottles);
+        this.playingField.setContainers(containers);
     }
 
     // TODO save for hint?

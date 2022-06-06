@@ -1,15 +1,15 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayingField {
-    private List<Bottle> bottles = new ArrayList<>();
+    private List<Container> containers = new ArrayList<>();
 
     public List<Move> getLegalMoves(){
         List<Move> moves = new ArrayList<>();
-        for(int i = 0; i< bottles.size(); i++){
-            for(int j = 0; j< bottles.size(); j++){
+        for(int i = 0; i< containers.size(); i++){
+            for(int j = 0; j< containers.size(); j++){
                 Move move = new Move(i,j);
                 if(i!=j && isOk(move)){
                     moves.add(move);
@@ -21,13 +21,13 @@ public class PlayingField {
 
     public boolean move(Move move){
         if(!isOk(move)){ return false; }
-        bottles.get(move.getTo()).addColor(bottles.get(move.getFrom()).pop());
+        containers.get(move.getTo()).addColor(containers.get(move.getFrom()).pop());
 
         return false;
     }
 
     public boolean isWon(){
-        for(var b: bottles){
+        for(var b: containers){
             if(!(b.isEmpty() || b.isFinished())){
                 return false;
             }
@@ -36,35 +36,35 @@ public class PlayingField {
     }
 
     private boolean isOk(int index){
-        return index>=0 && index<bottles.size();
+        return index>=0 && index< containers.size();
     }
     /**
      * checks for: indizes ok, FROM not empty, TO not full, colors fit
      */
     private boolean isOk(Move move){
-        if(!isOk(move.getFrom()) || !isOk(move.getTo()) || bottles.get(move.getFrom()).isEmpty() || bottles.get(move.getTo()).isFull()){
+        if(!isOk(move.getFrom()) || !isOk(move.getTo()) || containers.get(move.getFrom()).isEmpty() || containers.get(move.getTo()).isFull()){
             return false;
         }
-        if(!bottles.get(move.getTo()).isEmpty()){
-            if(bottles.get(move.getFrom()).getTop().equals(bottles.get(move.getFrom()).getTop())){
+        if(!containers.get(move.getTo()).isEmpty()){
+            if(containers.get(move.getFrom()).getTop().equals(containers.get(move.getFrom()).getTop())){
                 return false;
             }
         }
         return true;
     }
 
-    public void setBottles(List<Bottle> bottles) {
-        this.bottles = bottles;
+    public void setContainers(List<Container> containers) {
+        this.containers = containers;
     }
 
-    public List<Bottle> getBottles() {
-        return bottles;
+    public List<Container> getContainers() {
+        return containers;
     }
 
     @Override
     public String toString() {
         return "PlayingField{" +
-                "bottles=" + bottles +
+                "containers=" + containers +
                 '}';
     }
 }

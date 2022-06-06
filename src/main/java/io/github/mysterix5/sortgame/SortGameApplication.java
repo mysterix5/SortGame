@@ -1,13 +1,13 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WaterColorApplication {
+public class SortGameApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WaterColorApplication.class, args);
+        SpringApplication.run(SortGameApplication.class, args);
     }
 
 }

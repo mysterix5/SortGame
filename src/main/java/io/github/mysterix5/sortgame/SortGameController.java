@@ -1,4 +1,4 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,20 +9,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/game")
-public class WaterColorController {
+public class SortGameController {
     @GetMapping
-    public List<Bottle> getPlayingField(){
+    public List<Container> getPlayingField(){
         var game = new Game();
 
-        List<Bottle> dummyGameWon = new ArrayList<>();
-        var bottle1 = new Bottle();
-        bottle1.addColor(Color.BLUE);
-        bottle1.addColor(Color.BLUE);
-        bottle1.addColor(Color.BLUE);
-        bottle1.addColor(Color.BLUE);
-        dummyGameWon.add(bottle1);
-        dummyGameWon.add(new Bottle());
-        game.getPlayingField().setBottles(dummyGameWon);
+        List<Container> dummyGameWon = new ArrayList<>();
+        var container = new Container();
+        container.addColor(Color.BLUE);
+        container.addColor(Color.BLUE);
+        container.addColor(Color.BLUE);
+        container.addColor(Color.BLUE);
+        dummyGameWon.add(container);
+        dummyGameWon.add(new Container());
+        game.getPlayingField().setContainers(dummyGameWon);
         System.out.println("won? " + game.isWon());
         System.out.println("solvable? " + game.isSolvable());
         System.out.println(game);
@@ -31,6 +31,6 @@ public class WaterColorController {
         game.createDummyGame();
         System.out.println("won? " + game.isWon());
         System.out.println("solvable? " + game.isSolvable());
-        return game.getPlayingField().getBottles();
+        return game.getPlayingField().getContainers();
     }
 }

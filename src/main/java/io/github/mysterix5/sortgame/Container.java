@@ -1,4 +1,4 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Bottle {
+public class Container {
     private List<Color> colorList = new ArrayList<>();
     public static final int size = 4;
 
