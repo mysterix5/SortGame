@@ -6,21 +6,17 @@ import java.util.List;
 public class PlayingField {
     private List<Bottle> bottles = new ArrayList<>();
 
-    public boolean isWon(){
-        for(var b: bottles){
-            if(!(b.isEmpty() || b.isFinished())){
-                return false;
+    public List<Move> getLegalMoves(){
+        List<Move> moves = new ArrayList<>();
+        for(int i = 0; i< bottles.size(); i++){
+            for(int j = 0; j< bottles.size(); j++){
+                Move move = new Move(i,j);
+                if(i!=j && isOk(move)){
+                    moves.add(move);
+                }
             }
         }
-        return true;
-    }
-
-    public void setBottles(List<Bottle> bottles) {
-        this.bottles = bottles;
-    }
-
-    public List<Bottle> getBottles() {
-        return bottles;
+        return moves;
     }
 
     public boolean move(Move move){
@@ -28,6 +24,15 @@ public class PlayingField {
         bottles.get(move.getTo()).addColor(bottles.get(move.getFrom()).pop());
 
         return false;
+    }
+
+    public boolean isWon(){
+        for(var b: bottles){
+            if(!(b.isEmpty() || b.isFinished())){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isOk(int index){
@@ -46,6 +51,14 @@ public class PlayingField {
             }
         }
         return true;
+    }
+
+    public void setBottles(List<Bottle> bottles) {
+        this.bottles = bottles;
+    }
+
+    public List<Bottle> getBottles() {
+        return bottles;
     }
 
     @Override
