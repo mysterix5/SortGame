@@ -1,4 +1,4 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +9,17 @@ import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WaterColorGame_IT {
+public class SortGame_IT {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
     public void integrationTest(){
-        ResponseEntity<WaterColorBottle[]> response;
+        ResponseEntity<Game> response;
 
         // initial get todos via api should be empty
-        response = restTemplate.getForEntity("/api/game", WaterColorBottle[].class);
-        System.out.println(Arrays.toString(response.getBody()));
+        response = restTemplate.getForEntity("/api/game", Game.class);
+        System.out.println(response.getBody());
     }
 }

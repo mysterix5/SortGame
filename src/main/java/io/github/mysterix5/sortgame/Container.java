@@ -1,14 +1,20 @@
-package io.github.mysterix5.watercolor;
+package io.github.mysterix5.sortgame;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class WaterColorBottle {
-    private List<WaterColorEnum> colorList = new ArrayList<>();
-    public static final int size = 4;
+@NoArgsConstructor
+public class Container {
+    private List<Color> colorList = new ArrayList<>();
+    private int height = 4;
+
+    public Container(int height){
+        this.height = height;
+    }
 
     @Override
     public String toString() {
@@ -17,13 +23,17 @@ public class WaterColorBottle {
                 '}';
     }
 
-    public void addColor(WaterColorEnum color){
+    public Color getTop(){
+        return !isEmpty() ? colorList.get(colorList.size()-1) : null;
+    }
+
+    public void addColor(Color color){
         if(isFull()) throw new RuntimeException("cant add another color to this bottle");
         colorList.add(color);
     }
 
     public boolean isFull(){
-        return colorList.size()>=4;
+        return colorList.size()>=height;
     }
     public boolean isEmpty(){
         return colorList.isEmpty();
@@ -33,12 +43,16 @@ public class WaterColorBottle {
         if(!isFull()){
             return false;
         }
-        WaterColorEnum color = colorList.get(0);
+        Color color = colorList.get(0);
         for(var c: colorList){
             if(c!=color){
                 return false;
             }
         }
         return true;
+    }
+
+    public Color pop() {
+        return !isEmpty() ? colorList.remove(colorList.size()-1) : null;
     }
 }
