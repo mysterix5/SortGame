@@ -11,18 +11,19 @@ import java.util.List;
 @RequestMapping("/api/game")
 public class SortGameController {
     @GetMapping
-    public List<Container> getPlayingField(){
-        var game = new Game();
+    public Game getPlayingField(){
+        GameProperties gameProperties = new GameProperties(4, 6, 2);
+        var game = new Game(gameProperties);
 
         List<Container> dummyGameWon = new ArrayList<>();
-        var container = new Container();
+        var container = new Container(gameProperties.getContainerHeight());
         container.addColor(Color.BLUE);
         container.addColor(Color.BLUE);
         container.addColor(Color.BLUE);
         container.addColor(Color.BLUE);
         dummyGameWon.add(container);
-        dummyGameWon.add(new Container());
-        game.getPlayingField().setContainers(dummyGameWon);
+        dummyGameWon.add(new Container(gameProperties.getContainerHeight()));
+        game.getInitialPosition().setContainers(dummyGameWon);
         System.out.println("won? " + game.isWon());
         System.out.println("solvable? " + game.isSolvable());
         System.out.println(game);
@@ -31,6 +32,6 @@ public class SortGameController {
         game.createDummyGame();
         System.out.println("won? " + game.isWon());
         System.out.println("solvable? " + game.isSolvable());
-        return game.getPlayingField().getContainers();
+        return game;
     }
 }

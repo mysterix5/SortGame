@@ -1,14 +1,20 @@
 package io.github.mysterix5.sortgame;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class Container {
     private List<Color> colorList = new ArrayList<>();
-    public static final int size = 4;
+    private int height = 4;
+
+    public Container(int height){
+        this.height = height;
+    }
 
     @Override
     public String toString() {
@@ -27,7 +33,7 @@ public class Container {
     }
 
     public boolean isFull(){
-        return colorList.size()>=4;
+        return colorList.size()>=height;
     }
     public boolean isEmpty(){
         return colorList.isEmpty();

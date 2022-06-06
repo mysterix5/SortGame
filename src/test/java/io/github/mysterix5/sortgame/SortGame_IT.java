@@ -16,10 +16,10 @@ public class SortGame_IT {
 
     @Test
     public void integrationTest(){
-        ResponseEntity<Container[]> response;
+        ResponseEntity<Game> response;
 
         // initial get todos via api should be empty
-        response = restTemplate.getForEntity("/api/game", Container[].class);
-        System.out.println(Arrays.toString(response.getBody()));
+        response = restTemplate.getForEntity("/api/game", Game.class);
+        System.out.println(response.getBody());
     }
 }
