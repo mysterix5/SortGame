@@ -3,7 +3,6 @@ package io.github.mysterix5.sortgame;
 import lombok.Data;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Data
 public class Game {
@@ -22,6 +21,7 @@ public class Game {
     // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program
     // TODO this is probably not solvable
     public void createDummyGame(){
+        this.initialPosition = new PlayingField();
         List<Color> colorChoices = new ArrayList<>();
         gameProperties.getColors().stream().forEach(c->{
             for(int i = 0; i<gameProperties.getContainerHeight(); i++)
@@ -48,15 +48,16 @@ public class Game {
         }
 
         this.initialPosition.setContainers(containers);
-        // TODO copy initialPosition to actualPosition
+        this.actualPosition = new PlayingField(initialPosition);
     }
 
     // TODO save for hint?
     /* TODO brute-force algorithm
-        every possible move of first bottle
+        every legal move
         abort tree conditions:
             - no possible move
             - win
+            - game state has been reached before
         how storage
      */
     public boolean isSolvable(){
@@ -67,8 +68,13 @@ public class Game {
         return false;
     }
 
+    // TODO same algorithm as for permutation kata possible?
+    private void recursiveSolveSearch(){
+
+    }
+
     public boolean isWon() {
-        return initialPosition.isWon();
+        return actualPosition.isWon();
     }
 
 
