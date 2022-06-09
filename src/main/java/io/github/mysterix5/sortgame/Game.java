@@ -9,8 +9,8 @@ public class Game {
 
     private GameProperties gameProperties;
 
-    private PlayingField initialPosition = new PlayingField();
-    private PlayingField actualPosition = new PlayingField();
+    private PlayingField initialPosition;
+    private PlayingField actualPosition;
 
     public Game(){}
     public Game(GameProperties gameProperties){
@@ -21,7 +21,7 @@ public class Game {
     // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program
     // TODO this is probably not solvable
     public void createDummyGame(){
-        this.initialPosition = new PlayingField();
+        this.initialPosition = new PlayingField(gameProperties.getContainerHeight());
         List<Color> colorChoices = new ArrayList<>();
         gameProperties.getColors().stream().forEach(c->{
             for(int i = 0; i<gameProperties.getContainerHeight(); i++)

@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 public class PlayingField {
+    int containerHeight;
     private List<Container> containers = new ArrayList<>();
+
+    public PlayingField(int containerHeight){
+        this.containerHeight = containerHeight;
+    }
 
     public PlayingField(PlayingField playingField){
         this.containers = new ArrayList<>(playingField.containers);
+        this.containerHeight = playingField.containerHeight;
     }
     public List<Move> getLegalMoves(){
         List<Move> moves = new ArrayList<>();
@@ -31,13 +37,34 @@ public class PlayingField {
      * checks: FROM not empty, TO not full, TO empty or colors fit
      */
     public boolean move(Move move){
-        if(!isLegit(move)){ return false; }
-        containers.get(move.getTo()).addColor(containers.get(move.getFrom()).pop());
-        while(containers.get(move.getFrom()).getTop()==containers.get(move.getTo()).getTop()
-                && isLegit(move)){
-            containers.get(move.getTo()).addColor(containers.get(move.getFrom()).pop());
+        System.out.println(move);
+        if(!isLegit(move)){
+            System.out.println("not legit");
+            return false;
         }
-        return false;
+        Container from = containers.get(move.getFrom());
+        Container to = containers.get(move.getTo());
+        System.out.println("from: " + from);
+        System.out.println("to: " + to);
+        to.addColor(from.pop());
+        System.out.println("initial move executed: " + from + to);
+        System.out.println(this);
+        System.out.println("while");
+        System.out.println(from.getTop().equals(to.getTop()));
+        System.out.println(isLegit(move));
+        while(from.getTop().equals(to.getTop()) && isLegit(move)){
+            to.addColor(from.pop());
+            System.out.println("while move: " + from + to);
+        }
+        return true;
+    }
+
+    public boolean move(List<Move> moves){
+        boolean anyMoveFailed = true;
+        for(Move m: moves){
+            anyMoveFailed = anyMoveFailed && move(m);
+        }
+        return anyMoveFailed;
     }
 
     public boolean isWon(){
@@ -60,7 +87,7 @@ public class PlayingField {
             return false;
         }
         if(!containers.get(move.getTo()).isEmpty()){
-            if(containers.get(move.getFrom()).getTop().equals(containers.get(move.getFrom()).getTop())){
+            if(!containers.get(move.getFrom()).getTop().equals(containers.get(move.getTo()).getTop())){
                 return false;
             }
         }
@@ -77,9 +104,24 @@ public class PlayingField {
 
     @Override
     public String toString() {
-        return "PlayingField{" +
-                "containers=" + containers +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = containerHeight-1; i>=-1; i--){
+            for(Container c: containers){
+                if(i==-1){
+                    stringBuilder.append("---");
+                    stringBuilder.append(" \t");
+                    continue;
+                }
+                if(c.getActualSize()>i){
+                    stringBuilder.append(c.getColorList().get(i));
+                }else{
+                    stringBuilder.append("   ");
+                }
+                stringBuilder.append(" \t");
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     @Override

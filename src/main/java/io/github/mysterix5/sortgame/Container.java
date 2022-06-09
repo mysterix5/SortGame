@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -14,6 +15,10 @@ public class Container {
 
     public Container(int height){
         this.height = height;
+    }
+    public Container(int height, List<Color> colors){
+        this.height = height;
+        colorList = colors;
     }
 
     @Override
@@ -32,6 +37,9 @@ public class Container {
         colorList.add(color);
     }
 
+    public int getActualSize() {
+        return colorList.size();
+    }
     public boolean isFull(){
         return colorList.size()>=height;
     }
