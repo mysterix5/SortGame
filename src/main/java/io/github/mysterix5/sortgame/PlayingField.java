@@ -37,24 +37,14 @@ public class PlayingField {
      * checks: FROM not empty, TO not full, TO empty or colors fit
      */
     public boolean move(Move move){
-        System.out.println(move);
         if(!isLegit(move)){
-            System.out.println("not legit");
             return false;
         }
         Container from = containers.get(move.getFrom());
         Container to = containers.get(move.getTo());
-        System.out.println("from: " + from);
-        System.out.println("to: " + to);
         to.addColor(from.pop());
-        System.out.println("initial move executed: " + from + to);
-        System.out.println(this);
-        System.out.println("while");
-        System.out.println(from.getTop().equals(to.getTop()));
-        System.out.println(isLegit(move));
-        while(from.getTop().equals(to.getTop()) && isLegit(move)){
+        while(isLegit(move) && from.getTop().equals(to.getTop())){
             to.addColor(from.pop());
-            System.out.println("while move: " + from + to);
         }
         return true;
     }

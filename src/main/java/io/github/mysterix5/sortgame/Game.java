@@ -67,14 +67,14 @@ public class Game {
 
         return false;
     }
-    private void recursiveSolutionFinder(PlayingField playingField, Map<Integer, Integer> states, List<Move> moves, List<List<Move>> solves){
+    private void recursiveSolutionFinder(PlayingField playingField, Map<Integer, Integer> states, List<Move> moves, List<List<Move>> solvings){
         var legalMoves = playingField.getLegalMoves();
         if(legalMoves.isEmpty()){
-
             return;
         }
         if(playingField.isWon()){
             // add to solvings
+            solvings.add(moves);
             return;
         }
         if(states.containsKey(playingField.hashCode())){
