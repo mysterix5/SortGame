@@ -67,6 +67,29 @@ public class Game {
 
         return false;
     }
+    private void recursiveSolutionFinder(PlayingField playingField, Map<Integer, Integer> states, List<Move> moves, List<List<Move>> solves){
+        var legalMoves = playingField.getLegalMoves();
+        if(legalMoves.isEmpty()){
+
+            return;
+        }
+        if(playingField.isWon()){
+            // add to solvings
+            return;
+        }
+        if(states.containsKey(playingField.hashCode())){
+            // TODO state already reached, which has less moves?
+            // but maybe just ignore for now
+            return;
+        }
+        else {
+            // TODO add to states
+        }
+        // For every legal move call recursive
+        // add move to moves - NEW INSTANCE
+        // apply move to playingfield - NEW INSTANCE
+        // call
+    }
 
     // TODO same algorithm as for permutation kata possible?
     private void recursiveSolveSearch(){
