@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-//@NoArgsConstructor
+@NoArgsConstructor
 public class PlayingField {
     int containerHeight;
     private List<Container> containers = new ArrayList<>();
@@ -16,7 +16,9 @@ public class PlayingField {
     }
 
     public PlayingField(PlayingField playingField){
-        this.containers = new ArrayList<>(playingField.containers);
+        for(Container c: playingField.getContainers()){
+            this.containers.add(new Container(c));
+        }
         this.containerHeight = playingField.containerHeight;
     }
     public List<Move> getLegalMoves(){

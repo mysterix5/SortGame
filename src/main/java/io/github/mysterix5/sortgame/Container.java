@@ -21,6 +21,11 @@ public class Container {
         colorList = colors;
     }
 
+    public Container(Container container){
+        this.height = container.getHeight();
+        this.colorList.addAll(container.getColorList());
+    }
+
     @Override
     public String toString() {
         return "WaterColorBottle{" +
