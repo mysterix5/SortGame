@@ -116,6 +116,18 @@ public class PlayingField {
         return stringBuilder.toString();
     }
 
+    public String toInitializationString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("PlayingField playingField = new PlayingField(").append(this.containerHeight).append(");\n");
+        stringBuilder.append("List<Container> containers = new ArrayList<>();\n");
+        for(Container c: this.containers){
+
+            stringBuilder.append("containers.add(new Container(").append(this.containerHeight).append(", new ArrayList<>(").append(c.toInitializationString()).append(")));\n");
+        }
+        stringBuilder.append("playingField.setContainers(containers);");
+        return stringBuilder.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

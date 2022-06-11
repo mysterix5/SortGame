@@ -110,17 +110,19 @@ class GameTest {
         System.out.println(playingField);
         for(var s: solutions)
             System.out.println(s);
-        printSolutionsAsListForAssert(solutions);
+        System.out.println(solutionsToInitializationString(solutions));
 
         assertThat(solutions).contains(List.of(new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(2, 0), new Move(2, 3), new Move(1, 2), new Move(1, 3), new Move(0, 1), new Move(0, 2)));
     }
 
-    public void printSolutionsAsListForAssert(List<List<Move>> solutions){
+    public String solutionsToInitializationString(List<List<Move>> solutions){
+        StringBuilder stringBuilder = new StringBuilder();
         for(var s: solutions){
-            System.out.println("List.of(" + s.stream().
+            stringBuilder.append("List.of(").append(s.stream().
                     map(m -> "new Move" + m).
-                    collect(Collectors.joining(", ")) + ")");
+                    collect(Collectors.joining(", "))).append(");\n");
         }
+        return stringBuilder.toString();
     }
 
     @Test
@@ -130,8 +132,35 @@ class GameTest {
 
         List<List<Move>> solutions = StaticMethods.solve(playingField);
         System.out.println(playingField);
-        for(var s: solutions)
+        for(var s: solutions){
             System.out.println(s);
+        }
+        System.out.println(solutionsToInitializationString(solutions));
+
+        System.out.println(playingField.toInitializationString());
     }
+
+    @Test
+    void littleTest(){
+        PlayingField playingField = new PlayingField(4);
+        List<Container> containers = new ArrayList<>();
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.RED, Color.RED, Color.ORANGE, Color.BLUE))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.PURPLE, Color.PURPLE, Color.GREY, Color.PURPLE))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.RED, Color.YELLOW))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.GREY, Color.GREEN, Color.GREY, Color.GREY))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.ORANGE, Color.GREEN, Color.ORANGE, Color.BROWN))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.RED, Color.GREEN, Color.BROWN, Color.YELLOW))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.BROWN, Color.ORANGE, Color.YELLOW, Color.YELLOW))));
+        containers.add(new Container(4, new ArrayList<>(List.of(Color.BLUE, Color.BLUE, Color.BROWN, Color.GREEN))));
+        containers.add(new Container(4, new ArrayList<>(List.of())));
+        containers.add(new Container(4, new ArrayList<>(List.of())));
+        playingField.setContainers(containers);
+
+        List<List<Move>> solutions = StaticMethods.solve(playingField);
+        var sol = List.of(new Move(0, 8), new Move(2, 9), new Move(5, 9), new Move(4, 5), new Move(0, 4), new Move(0, 2), new Move(2, 0), new Move(6, 9), new Move(4, 6), new Move(7, 4), new Move(5, 7), new Move(8, 2), new Move(0, 8), new Move(3, 0), new Move(3, 4), new Move(0, 3), new Move(1, 0), new Move(1, 3), new Move(0, 1), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(6, 4), new Move(5, 6), new Move(3, 5), new Move(5, 3), new Move(7, 6), new Move(1, 7), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(1, 4), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(2, 4), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(3, 1), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(5, 4), new Move(0, 5), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(0, 8));
+
+        assertThat(solutions).contains(sol);
+    }
+
 
 }

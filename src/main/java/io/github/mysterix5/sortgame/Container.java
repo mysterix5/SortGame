@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +31,14 @@ public class Container {
         return "WaterColorBottle{" +
                 "colorList=" + colorList +
                 '}';
+    }
+
+    public String toInitializationString() {
+        return "List.of(" +
+                colorList.stream()
+                        .map(color -> "Color." + color)
+                        .collect(Collectors.joining(", ")) +
+                ")";
     }
 
     public Color getTop(){
