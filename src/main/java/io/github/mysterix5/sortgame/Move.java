@@ -8,4 +8,9 @@ import lombok.Data;
 public class Move {
     private int from;
     private int to;
+
+    @Override
+    public String toString() {
+        return "(" + from + ", " + to + ")";
+    }
 }

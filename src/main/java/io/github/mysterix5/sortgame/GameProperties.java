@@ -16,7 +16,7 @@ public class GameProperties {
     public GameProperties(int containerHeight, int nColors, int nEmptyContainers){
         this.containerHeight = containerHeight;
         this.nEmptyContainers = nEmptyContainers;
-        if(nColors<=1 || nColors >=Color.values().length){
+        if(nColors<=1 || nColors >Color.values().length){
             throw new RuntimeException("choose between 2 and " + Color.values().length + " colors for your game.");
         }
         colors.addAll(Arrays.stream(Color.values()).toList().subList(0,nColors));

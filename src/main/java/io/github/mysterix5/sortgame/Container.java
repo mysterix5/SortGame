@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -15,12 +16,29 @@ public class Container {
     public Container(int height){
         this.height = height;
     }
+    public Container(int height, List<Color> colors){
+        this.height = height;
+        colorList = colors;
+    }
+
+    public Container(Container container){
+        this.height = container.getHeight();
+        this.colorList.addAll(container.getColorList());
+    }
 
     @Override
     public String toString() {
         return "WaterColorBottle{" +
                 "colorList=" + colorList +
                 '}';
+    }
+
+    public String toInitializationString() {
+        return "List.of(" +
+                colorList.stream()
+                        .map(color -> "Color." + color)
+                        .collect(Collectors.joining(", ")) +
+                ")";
     }
 
     public Color getTop(){
@@ -32,6 +50,9 @@ public class Container {
         colorList.add(color);
     }
 
+    public int getActualSize() {
+        return colorList.size();
+    }
     public boolean isFull(){
         return colorList.size()>=height;
     }
