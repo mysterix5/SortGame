@@ -6,19 +6,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/game")
 public class SortGameController {
     private final SortGameService gameService;
 
-    @CrossOrigin
     @GetMapping
     public List<GameInfo> getSavedGamesOverview(){
         return gameService.getGamesOverview();
     }
 
     @GetMapping("/{id}")
+    public GameInfo getGameById(@PathVariable String id) {
+        return gameService.getGameById(id);
+    }
+
+
+    @GetMapping("/dummytestshit")
     public Game getPlayingField(@PathVariable String id){
         GameProperties gameProperties = new GameProperties(4, 6, 2);
         Game game = new Game(gameProperties);

@@ -16,6 +16,9 @@ public class SortGameRepository {
         fillWithPreparedGame2();
     }
 
+    public Game findById(String id) {
+        return savedGames.get(id);
+    }
     public List<Game> findAll(){
         return savedGames.values().stream().toList();
     }
@@ -66,4 +69,5 @@ public class SortGameRepository {
 
         savedGames.put(game.getId(), game);
     }
+
 }
