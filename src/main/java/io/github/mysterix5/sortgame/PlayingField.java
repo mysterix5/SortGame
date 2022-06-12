@@ -118,11 +118,11 @@ public class PlayingField {
 
     public String toInitializationString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("PlayingField playingField = new PlayingField(").append(this.containerHeight).append(");\n");
+        stringBuilder.append("int height = ").append(this.containerHeight).append(";\n");
+        stringBuilder.append("PlayingField playingField = new PlayingField(height);\n");
         stringBuilder.append("List<Container> containers = new ArrayList<>();\n");
         for(Container c: this.containers){
-
-            stringBuilder.append("containers.add(new Container(").append(this.containerHeight).append(", new ArrayList<>(").append(c.toInitializationString()).append(")));\n");
+            stringBuilder.append("containers.add(new Container(height, new ArrayList<>(").append(c.toInitializationString()).append(")));\n");
         }
         stringBuilder.append("playingField.setContainers(containers);");
         return stringBuilder.toString();

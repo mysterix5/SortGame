@@ -1,17 +1,25 @@
 package io.github.mysterix5.sortgame;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/game")
 public class SortGameController {
+    private final SortGameService gameService;
+
+    @CrossOrigin
     @GetMapping
-    public Game getPlayingField(){
+    public List<GameInfo> getSavedGamesOverview(){
+        return gameService.getGamesOverview();
+    }
+
+    @GetMapping("/{id}")
+    public Game getPlayingField(@PathVariable String id){
         GameProperties gameProperties = new GameProperties(4, 6, 2);
         Game game = new Game(gameProperties);
 
