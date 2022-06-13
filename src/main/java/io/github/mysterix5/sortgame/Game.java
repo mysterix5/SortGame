@@ -1,9 +1,11 @@
 package io.github.mysterix5.sortgame;
 
+import java.util.UUID;
+
 public class Game {
 
+    private final String id = UUID.randomUUID().toString();
     private GameProperties gameProperties;
-
     private PlayingField initialPosition;
     private PlayingField actualPosition;
 
@@ -34,4 +36,11 @@ public class Game {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void reset() {
+        setPosition(this.getInitialPosition());
+    }
 }

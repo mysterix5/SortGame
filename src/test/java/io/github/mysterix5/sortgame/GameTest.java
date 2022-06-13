@@ -161,6 +161,28 @@ class GameTest {
 
         assertThat(solutions).contains(sol);
     }
+    @Test
+    void littleTest2(){
+        int height = 4;
+        PlayingField playingField = new PlayingField(height);
+        List<Container> containers = new ArrayList<>();
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.ORANGE, Color.PURPLE, Color.ORANGE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.BROWN, Color.GREEN, Color.GREEN))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.RED, Color.BLUE, Color.PURPLE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.RED, Color.YELLOW, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.BLUE, Color.RED, Color.RED))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.ORANGE, Color.YELLOW, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.BROWN, Color.ORANGE, Color.BLUE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.BROWN, Color.BROWN, Color.YELLOW, Color.BLUE))));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        playingField.setContainers(containers);
+
+        List<List<Move>> solutions = StaticMethods.solve(playingField);
+        var sol = List.of(new Move(0, 8), new Move(0, 9), new Move(2, 9), new Move(6, 2), new Move(6, 0), new Move(8, 0), new Move(2, 8), new Move(4, 2), new Move(4, 8), new Move(3, 4), new Move(5, 3), new Move(7, 8), new Move(3, 5), new Move(7, 3), new Move(6, 7), new Move(4, 6), new Move(0, 4), new Move(1, 0), new Move(1, 7), new Move(1, 6), new Move(0, 1), new Move(2, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(3, 0), new Move(1, 3), new Move(3, 1), new Move(3, 9), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 0), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(0, 5), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(1, 4), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(2, 4), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(3, 1), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(5, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 3), new Move(0, 5), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(0, 9));
+
+        assertThat(solutions).contains(sol);
+    }
 
 
 }
