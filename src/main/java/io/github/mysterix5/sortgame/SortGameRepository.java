@@ -2,10 +2,7 @@ package io.github.mysterix5.sortgame;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class SortGameRepository {
@@ -16,8 +13,9 @@ public class SortGameRepository {
         fillWithPreparedGame2();
     }
 
-    public Game findById(String id) {
-        return savedGames.get(id);
+    public Optional<Game> findById(String id) {
+        System.out.println(savedGames);
+        return Optional.ofNullable(savedGames.get(id));
     }
     public List<Game> findAll(){
         return savedGames.values().stream().toList();
@@ -70,4 +68,7 @@ public class SortGameRepository {
         savedGames.put(game.getId(), game);
     }
 
+    public void save(Game game) {
+        savedGames.put(game.getId(), game);
+    }
 }

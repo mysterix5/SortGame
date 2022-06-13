@@ -39,4 +39,8 @@ public class Game {
     public String getId() {
         return id;
     }
+
+    public void reset() {
+        setPosition(this.getInitialPosition());
+    }
 }

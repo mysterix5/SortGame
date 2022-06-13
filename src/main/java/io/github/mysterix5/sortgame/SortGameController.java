@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -14,18 +15,28 @@ public class SortGameController {
     private final SortGameService gameService;
 
     @GetMapping
-    public List<GameInfo> getSavedGamesOverview(){
-        return gameService.getGamesOverview();
+    public List<String> getSavedGamesOverview(){
+        return gameService.getAllSavedGamesIds();
     }
 
     @GetMapping("/{id}")
-    public GameInfo getGameById(@PathVariable String id) {
-        return gameService.getGameById(id);
+    public Optional<GameInfo> getGameById(@PathVariable String id) {
+        return gameService.getGameById( id);
     }
 
+    @PutMapping("/move")
+    public void move(@RequestBody GamePutter gamePutter){
+        System.out.println(gamePutter);
+        gameService.move(gamePutter);
+    }
+    @PutMapping("/reset")
+    public void resetGame(@RequestBody GamePutter gamePutter){
+        System.out.println(gamePutter);
+        gameService.resetGame(gamePutter.getId());
+    }
 
     @GetMapping("/dummytestshit")
-    public Game getPlayingField(@PathVariable String id){
+    public Game getPlayingField(){
         GameProperties gameProperties = new GameProperties(4, 6, 2);
         Game game = new Game(gameProperties);
 
