@@ -1,5 +1,7 @@
-package io.github.mysterix5.sortgame;
+package io.github.mysterix5.sortgame.spring;
 
+import io.github.mysterix5.sortgame.game.Game;
+import io.github.mysterix5.sortgame.game.GameInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

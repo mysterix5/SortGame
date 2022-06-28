@@ -1,5 +1,8 @@
 package io.github.mysterix5.sortgame;
 
+import io.github.mysterix5.sortgame.game.*;
+import io.github.mysterix5.sortgame.game.solution.Solver;
+import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -127,7 +130,7 @@ class GameTest {
 
     @Test
     void solveDummyGame() {
-        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 8, 2));
+        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 10, 2));
         System.out.println(playingField);
 
         List<List<Move>> solutions = StaticMethods.solve(playingField);
@@ -184,5 +187,32 @@ class GameTest {
         assertThat(solutions).contains(sol);
     }
 
+
+
+    @Test
+    void testNewSolver() {
+        GameProperties gameProperties = new GameProperties(4, 6, 2);
+        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
+        System.out.println(playingField);
+
+        Solver solver = new Solver();
+        solver.setup(playingField);
+        solver.solve();
+        if(solver.getSolutions().isEmpty()){
+            System.out.println("no solution found");
+        }else{
+            System.out.println(solver.getSolutions().get(0).getMoves());
+            System.out.println(solver.getSolutions().get(0).getPlayingField());
+        }
+
+//        System.out.println(solutionsToInitializationString(solver.getSolutions()));
+        System.out.println("-----------");
+        List<List<Move>> solutions = StaticMethods.solve(playingField);
+        for(var s: solutions){
+            System.out.println(s);
+        }
+
+        System.out.println(playingField.toInitializationString());
+    }
 
 }

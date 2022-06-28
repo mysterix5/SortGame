@@ -1,5 +1,8 @@
-package io.github.mysterix5.sortgame;
+package io.github.mysterix5.sortgame.spring;
 
+import io.github.mysterix5.sortgame.game.PlayingField;
+import io.github.mysterix5.sortgame.game.solution.StaticMethods;
+import io.github.mysterix5.sortgame.game.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

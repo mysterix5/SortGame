@@ -1,8 +1,18 @@
-package io.github.mysterix5.sortgame;
+package io.github.mysterix5.sortgame.game.solution;
+
+import io.github.mysterix5.sortgame.game.*;
 
 import java.util.*;
 
 public class StaticMethods {
+
+
+    private static void solutionFinderIterative(PlayingField playingField){
+        List<PlayingField> playingFields = new ArrayList<>();
+
+    }
+
+
 
     // TODO save for hint?
     /* TODO brute-force algorithm
@@ -21,6 +31,7 @@ public class StaticMethods {
 
         return solutions;
     }
+
     private static void recursiveSolutionFinder(PlayingField playingField, Map<Integer, Integer> states, List<Move> moves, List<List<Move>> solutions){
         if(solutionFound)
             return;

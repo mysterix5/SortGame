@@ -1,5 +1,10 @@
-package io.github.mysterix5.sortgame;
+package io.github.mysterix5.sortgame.spring;
 
+import io.github.mysterix5.sortgame.game.PlayingField;
+import io.github.mysterix5.sortgame.game.Color;
+import io.github.mysterix5.sortgame.game.Container;
+import io.github.mysterix5.sortgame.game.Game;
+import io.github.mysterix5.sortgame.game.GameProperties;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
