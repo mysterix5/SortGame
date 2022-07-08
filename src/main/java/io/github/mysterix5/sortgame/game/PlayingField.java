@@ -3,6 +3,7 @@ package io.github.mysterix5.sortgame.game;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -139,6 +140,12 @@ public class PlayingField {
     @Override
     public int hashCode() {
         return Objects.hash(containers);
+    }
+
+    public int hashCodeIgnoreOrder() {
+        List<Container> tmp = new ArrayList<>(containers);
+        Collections.sort(tmp);
+        return Objects.hash(tmp);
     }
 
 }

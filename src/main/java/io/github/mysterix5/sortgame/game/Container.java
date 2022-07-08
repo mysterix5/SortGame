@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class Container {
+public class Container implements Comparable<Container> {
     private List<Color> colorList = new ArrayList<>();
     private int height = 4;
 
@@ -75,5 +75,22 @@ public class Container {
 
     public Color pop() {
         return !isEmpty() ? colorList.remove(colorList.size()-1) : null;
+    }
+
+    @Override
+    public int compareTo(Container o) {
+        int thisl = colorList.size();
+        int thatl = o.getColorList().size();
+        if(thisl != thatl){
+            return thisl-thatl;
+        }
+        for(int i = 0; i<thisl; i++){
+            int thisc = colorList.get(i).ordinal();
+            int thatc = o.getColorList().get(i).ordinal();
+            if(thisc != thatc){
+                return thisc-thatc;
+            }
+        }
+        return 0;
     }
 }

@@ -16,6 +16,7 @@ public class SortGameRepository {
     public SortGameRepository(){
         fillWithPreparedGame1();
         fillWithPreparedGame2();
+        fillWithPreparedGame3();
     }
 
     public Optional<Game> findById(String id) {
@@ -63,6 +64,33 @@ public class SortGameRepository {
         containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.GREEN, Color.YELLOW, Color.BLUE))));
         containers.add(new Container(height, new ArrayList<>(List.of(Color.BROWN, Color.YELLOW, Color.BLUE, Color.GREEN))));
         containers.add(new Container(height, new ArrayList<>(List.of(Color.RED, Color.ORANGE, Color.PURPLE, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        playingField.setContainers(containers);
+
+        Game game = new Game(gameProperties);
+        game.setPosition(playingField);
+
+        savedGames.put(game.getId(), game);
+    }
+
+    public void fillWithPreparedGame3(){
+
+        GameProperties gameProperties = new GameProperties(4, 10, 2);
+        int height = gameProperties.getContainerHeight();
+
+        PlayingField playingField = new PlayingField(height);
+        List<Container> containers = new ArrayList<>();
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.PINK, Color.PINK, Color.ORANGE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.ORANGE, Color.BROWN, Color.YELLOW, Color.RED))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.ORANGE, Color.BROWN, Color.LIME, Color.RED))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.BLUE, Color.PURPLE, Color.PURPLE, Color.BLUE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.BLUE, Color.ORANGE, Color.GREY, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.LIME, Color.LIME, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.BROWN, Color.LIME, Color.PINK))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.RED, Color.BLUE, Color.PINK, Color.BROWN))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.PURPLE, Color.RED, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.YELLOW, Color.PURPLE, Color.GREY))));
         containers.add(new Container(height, new ArrayList<>(List.of())));
         containers.add(new Container(height, new ArrayList<>(List.of())));
         playingField.setContainers(containers);

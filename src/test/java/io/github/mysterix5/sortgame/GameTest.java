@@ -2,6 +2,7 @@ package io.github.mysterix5.sortgame;
 
 import io.github.mysterix5.sortgame.game.*;
 import io.github.mysterix5.sortgame.game.solution.Solver;
+import io.github.mysterix5.sortgame.game.solution.SolverDepth;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import org.junit.jupiter.api.Test;
 
@@ -128,20 +129,20 @@ class GameTest {
         return stringBuilder.toString();
     }
 
-    @Test
-    void solveDummyGame() {
-        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 10, 2));
-        System.out.println(playingField);
-
-        List<List<Move>> solutions = StaticMethods.solve(playingField);
-        System.out.println(playingField);
-        for(var s: solutions){
-            System.out.println(s);
-        }
-        System.out.println(solutionsToInitializationString(solutions));
-
-        System.out.println(playingField.toInitializationString());
-    }
+//    @Test
+//    void solveDummyGame() {
+//        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 10, 2));
+//        System.out.println(playingField);
+//
+//        List<List<Move>> solutions = StaticMethods.solve(playingField);
+//        System.out.println(playingField);
+//        for(var s: solutions){
+//            System.out.println(s);
+//        }
+//        System.out.println(solutionsToInitializationString(solutions));
+//
+//        System.out.println(playingField.toInitializationString());
+//    }
 
     @Test
     void littleTest(){
@@ -187,32 +188,128 @@ class GameTest {
         assertThat(solutions).contains(sol);
     }
 
-
+//
+//
+//    @Test
+//    void testNewSolver() {
+//        GameProperties gameProperties = new GameProperties(4, 6, 2);
+//        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
+//        System.out.println(playingField);
+//
+//        Solver solver = new Solver();
+//        solver.setup(playingField);
+//        solver.solve();
+//        if(solver.getSolutions().isEmpty()){
+//            System.out.println("no solution found");
+//        }else{
+//            System.out.println(solver.getSolutions().get(0).getMoves());
+//            System.out.println(solver.getSolutions().get(0).getPlayingField());
+//        }
+//
+////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
+//        System.out.println("-----------");
+//        List<List<Move>> solutions = StaticMethods.solve(playingField);
+//        for(var s: solutions){
+//            System.out.println(s);
+//        }
+//
+//        System.out.println(playingField.toInitializationString());
+//    }
+//    @Test
+//    void testNewSolverDepth() {
+//        GameProperties gameProperties = new GameProperties(4, 11, 2);
+//        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
+//        System.out.println(playingField);
+//
+//        SolverDepth solver = new SolverDepth();
+//        solver.setup(playingField);
+//        solver.solve(false);
+//        if(solver.getSolutions().isEmpty()){
+//            System.out.println("no solution found");
+//        }else{
+//            System.out.println(solver.getSolutions().get(0).getMoves());
+//            System.out.println(solver.getSolutions().get(0).getPlayingField());
+//        }
+//
+////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
+////        System.out.println("-----------");
+////        List<List<Move>> solutions = StaticMethods.solve(playingField);
+////        for(var s: solutions){
+////            System.out.println(s);
+////        }
+//
+//        System.out.println(playingField.toInitializationString());
+//    }
+//    @Test
+//    void testNewSolverDepthFixedPlayingfield() {
+//        GameProperties gameProperties = new GameProperties(4, 2, 2);
+//        int height = 4;
+//        PlayingField playingField = new PlayingField(height);
+//        List<Container> containers = new ArrayList<>();
+//        containers.add(new Container(height, new ArrayList<>(List.of(Color.YELLOW, Color.RED, Color.RED, Color.YELLOW))));
+//        containers.add(new Container(height, new ArrayList<>(List.of(Color.YELLOW, Color.RED, Color.RED, Color.YELLOW))));
+//        containers.add(new Container(height, new ArrayList<>(List.of())));
+//        containers.add(new Container(height, new ArrayList<>(List.of())));
+//        playingField.setContainers(containers);
+//
+//        System.out.println(playingField);
+//
+//        SolverDepth solver = new SolverDepth();
+//        solver.setup(playingField);
+//        solver.solve(false);
+//        if(solver.getSolutions().isEmpty()){
+//            System.out.println("no solution found");
+//        }else{
+//            System.out.println(solver.getSolutions().get(0).getMoves());
+//            System.out.println(solver.getSolutions().get(0).getPlayingField());
+//        }
+//
+////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
+//        System.out.println("-----------");
+//        List<List<Move>> solutions = StaticMethods.solve(playingField);
+//        for(var s: solutions){
+//            System.out.println(s);
+//        }
+//
+//        System.out.println(playingField.toInitializationString());
+//    }
 
     @Test
-    void testNewSolver() {
-        GameProperties gameProperties = new GameProperties(4, 6, 2);
-        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
-        System.out.println(playingField);
+    public void hashcodeTest(){
+        int height = 4;
+        PlayingField playingField = new PlayingField(height);
+        List<Container> containers = new ArrayList<>();
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.RED, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.PURPLE, Color.BLUE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.YELLOW, Color.GREEN, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.GREEN, Color.RED, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.YELLOW, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.RED, Color.YELLOW, Color.GREEN, Color.RED))));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        playingField.setContainers(containers);
 
-        Solver solver = new Solver();
-        solver.setup(playingField);
-        solver.solve();
-        if(solver.getSolutions().isEmpty()){
-            System.out.println("no solution found");
-        }else{
-            System.out.println(solver.getSolutions().get(0).getMoves());
-            System.out.println(solver.getSolutions().get(0).getPlayingField());
-        }
+        PlayingField playingField2 = new PlayingField(height);
+        containers = new ArrayList<>();
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.RED, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.PURPLE, Color.BLUE))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREY, Color.YELLOW, Color.GREEN, Color.YELLOW))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.GREEN, Color.GREEN, Color.RED, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.PURPLE, Color.BLUE, Color.YELLOW, Color.GREY))));
+        containers.add(new Container(height, new ArrayList<>(List.of(Color.RED, Color.YELLOW, Color.GREEN, Color.RED))));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        containers.add(new Container(height, new ArrayList<>(List.of())));
+        playingField2.setContainers(containers);
 
-//        System.out.println(solutionsToInitializationString(solver.getSolutions()));
-        System.out.println("-----------");
-        List<List<Move>> solutions = StaticMethods.solve(playingField);
-        for(var s: solutions){
-            System.out.println(s);
-        }
+        playingField.move(new Move(0,6));
+        playingField2.move(new Move(0,6));
 
-        System.out.println(playingField.toInitializationString());
+        playingField2.move(new Move(6,7));
+        playingField2.move(new Move(7,6));
+
+        System.out.println(playingField.hashCode());
+        System.out.println(playingField2.hashCode());
+        assertThat(playingField.hashCode()).isEqualTo(playingField2.hashCode());
     }
 
 }
