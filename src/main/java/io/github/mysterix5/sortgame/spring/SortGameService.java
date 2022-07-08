@@ -35,7 +35,7 @@ public class SortGameService {
         gameRepository.findById(id).ifPresent(Game::reset);
     }
 
-    public List<String> getAllSavedGamesIds() {
-        return gameRepository.findAll().stream().map(Game::getId).toList();
+    public List<GameInfo> getAllSavedGames() {
+        return gameRepository.findAll().stream().map(g->new GameInfo(g.getId(), g.getGameProperties().getNEmptyContainers()+g.getGameProperties().getNColors(), g.getGameProperties().getNColors(), g.getInitialPosition().getContainers())).toList();
     }
 }

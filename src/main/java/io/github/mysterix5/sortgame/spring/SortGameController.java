@@ -18,8 +18,8 @@ public class SortGameController {
     private final SortGameService gameService;
 
     @GetMapping
-    public List<String> getSavedGamesOverview(){
-        return gameService.getAllSavedGamesIds();
+    public List<GameInfo> getSavedGamesOverview(){
+        return gameService.getAllSavedGames();
     }
 
     @GetMapping("/{id}")
