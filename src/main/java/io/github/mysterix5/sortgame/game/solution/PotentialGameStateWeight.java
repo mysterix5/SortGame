@@ -1,7 +1,7 @@
 package io.github.mysterix5.sortgame.game.solution;
 
-import io.github.mysterix5.sortgame.game.Move;
-import io.github.mysterix5.sortgame.game.PlayingField;
+import io.github.mysterix5.sortgame.models.Move;
+import io.github.mysterix5.sortgame.models.PlayingField;
 import lombok.Data;
 
 import java.util.ArrayList;

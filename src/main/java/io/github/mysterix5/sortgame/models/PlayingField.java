@@ -1,4 +1,4 @@
-package io.github.mysterix5.sortgame.game;
+package io.github.mysterix5.sortgame.models;
 
 import lombok.NoArgsConstructor;
 

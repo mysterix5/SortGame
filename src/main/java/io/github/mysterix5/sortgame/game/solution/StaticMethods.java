@@ -1,6 +1,6 @@
 package io.github.mysterix5.sortgame.game.solution;
 
-import io.github.mysterix5.sortgame.game.*;
+import io.github.mysterix5.sortgame.models.*;
 
 import java.util.*;
 
@@ -74,7 +74,7 @@ public class StaticMethods {
     // TODO do not allow two times the same color on each other
     // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program
     // TODO this is probably not solvable
-    public static PlayingField createDummyGame(GameProperties gameProperties){
+    public static PlayingField createRandomGame(GameProperties gameProperties){
         PlayingField playingField = new PlayingField(gameProperties.getContainerHeight());
         List<Color> colorChoices = new ArrayList<>();
         gameProperties.getColors().forEach(c->{

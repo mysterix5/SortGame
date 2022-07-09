@@ -1,15 +1,22 @@
-package io.github.mysterix5.sortgame.game;
+package io.github.mysterix5.sortgame.models;
 
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document
 public class Game {
-
-    private final String id = UUID.randomUUID().toString();
+    @Id
+    private String id;
     private GameProperties gameProperties;
     private PlayingField initialPosition;
     private PlayingField actualPosition;
 
-    public Game(){}
     public Game(GameProperties gameProperties){
         this.gameProperties = gameProperties;
     }

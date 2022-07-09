@@ -1,6 +1,5 @@
-package io.github.mysterix5.sortgame.spring;
+package io.github.mysterix5.sortgame.models;
 
-import io.github.mysterix5.sortgame.game.Move;
 import lombok.Data;
 
 @Data

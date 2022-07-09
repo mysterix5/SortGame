@@ -1,6 +1,6 @@
 package io.github.mysterix5.sortgame;
 
-import io.github.mysterix5.sortgame.game.Game;
+import io.github.mysterix5.sortgame.models.Game;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,9 +1,7 @@
 package io.github.mysterix5.sortgame;
 
-import io.github.mysterix5.sortgame.game.*;
-import io.github.mysterix5.sortgame.game.solution.Solver;
-import io.github.mysterix5.sortgame.game.solution.SolverDepth;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
+import io.github.mysterix5.sortgame.models.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ class GameTest {
 
     @Test
     void createDummyGame() {
-        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 3, 2));
+        PlayingField playingField = StaticMethods.createRandomGame(new GameProperties(4, 3, 2));
         System.out.println(playingField);
     }
 

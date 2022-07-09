@@ -1,12 +1,13 @@
 package io.github.mysterix5.sortgame.spring;
 
-import io.github.mysterix5.sortgame.game.PlayingField;
-import io.github.mysterix5.sortgame.game.solution.StaticMethods;
-import io.github.mysterix5.sortgame.game.*;
+import io.github.mysterix5.sortgame.models.GameCreationData;
+import io.github.mysterix5.sortgame.models.GameInfo;
+import io.github.mysterix5.sortgame.models.GamePutter;
+import io.github.mysterix5.sortgame.models.Move;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,30 +39,19 @@ public class SortGameController {
         gameService.resetGame(gamePutter.getId());
     }
 
-    @GetMapping("/dummytestshit")
-    public Game getPlayingField(){
-        GameProperties gameProperties = new GameProperties(4, 6, 2);
-        Game game = new Game(gameProperties);
+    @GetMapping("/{id}/hint")
+    public ResponseEntity<Move> getHint(@PathVariable String id){
+        try {
+            return ResponseEntity.ok().body(gameService.getHint(id));
+        }catch (RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-        List<Container> dummyGameWon = new ArrayList<>();
-        Container container = new Container(gameProperties.getContainerHeight());
-        container.addColor(Color.BLUE);
-        container.addColor(Color.BLUE);
-        container.addColor(Color.BLUE);
-        container.addColor(Color.BLUE);
-        dummyGameWon.add(container);
-        dummyGameWon.add(new Container(gameProperties.getContainerHeight()));
-        PlayingField playingField = new PlayingField(gameProperties.getContainerHeight());
-        playingField.setContainers(dummyGameWon);
-        game.setPosition(playingField);
-        System.out.println("won? " + game.isWon());
-//        System.out.println("solvable? " + game.isSolvable());
-        System.out.println(game);
-
-
-        game.setPosition(StaticMethods.createDummyGame(gameProperties));
-        System.out.println("won? " + game.isWon());
-//        System.out.println("solvable? " + game.isSolvable());
-        return game;
+    @PostMapping("/create")
+    public GameInfo createGame(@RequestBody GameCreationData gameProperties){
+        System.out.println("CREATE GAME MAPPING");
+        System.out.println(gameProperties);
+        return gameService.createGame(gameProperties);
     }
 }

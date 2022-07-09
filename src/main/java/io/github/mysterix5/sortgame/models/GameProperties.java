@@ -1,4 +1,4 @@
-package io.github.mysterix5.sortgame.game;
+package io.github.mysterix5.sortgame.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 public class GameProperties {
     private int containerHeight;
     private int nEmptyContainers;
-    private final List<Color> colors = new ArrayList<>();
+    private List<Color> colors = new ArrayList<>();
     public GameProperties(int containerHeight, int nColors, int nEmptyContainers){
         this.containerHeight = containerHeight;
         this.nEmptyContainers = nEmptyContainers;

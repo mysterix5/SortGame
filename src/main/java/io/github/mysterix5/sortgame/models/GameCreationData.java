@@ -1,4 +1,4 @@
-package io.github.mysterix5.sortgame.spring;
+package io.github.mysterix5.sortgame.models;
 
 import lombok.Data;
 
