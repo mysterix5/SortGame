@@ -68,6 +68,9 @@ public class SolverWeight {
         } catch (OutOfMemoryError error) {
             System.out.println(error);
         }
+        if(solutions.isEmpty()){
+            System.out.println("NO SOLUTION FOUND");
+        }
         System.out.println("states to visit: " + gameStatesToVisit.size());
         System.out.println("visited states: " + visitedStates.size());
         System.out.println("againOnVisitedState: " + againOnVisitedState);
