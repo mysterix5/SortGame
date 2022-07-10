@@ -2,7 +2,6 @@ package io.github.mysterix5.sortgame.spring;
 
 import io.github.mysterix5.sortgame.models.GameCreationData;
 import io.github.mysterix5.sortgame.models.GameInfo;
-import io.github.mysterix5.sortgame.models.GamePutter;
 import io.github.mysterix5.sortgame.models.Move;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
