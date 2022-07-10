@@ -28,10 +28,9 @@ public class SortGameController {
         return gameService.getGameById( id);
     }
 
-    @PutMapping("/move")
-    public void move(@RequestBody GamePutter gamePutter){
-        System.out.println(gamePutter);
-        gameService.move(gamePutter);
+    @PutMapping("/{id}/move")
+    public void move(@RequestBody Move move, @PathVariable String id){
+        gameService.move(id, move);
     }
     @PutMapping("/reset")
     public void resetGame(@RequestBody GamePutter gamePutter){

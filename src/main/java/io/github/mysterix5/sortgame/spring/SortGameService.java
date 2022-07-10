@@ -26,10 +26,10 @@ public class SortGameService {
         }
     }
 
-    public void move(GamePutter gamePutter) {
-        Optional<Game> game = gameRepository.findById(gamePutter.getId());
+    public void move(String id, Move move) {
+        Optional<Game> game = gameRepository.findById(id);
         if(game.isPresent()){
-            game.get().getActualPosition().move(gamePutter.getMove());
+            game.get().getActualPosition().move(move);
             gameRepository.save(game.get());
         }
     }
