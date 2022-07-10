@@ -28,9 +28,7 @@ public class Container implements Comparable<Container> {
 
     @Override
     public String toString() {
-        return "WaterColorBottle{" +
-                "colorList=" + colorList +
-                '}';
+        return "Container: " + colorList;
     }
 
     public String toInitializationString() {

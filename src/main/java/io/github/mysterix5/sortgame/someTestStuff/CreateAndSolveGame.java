@@ -45,9 +45,7 @@ public class CreateAndSolveGame {
             System.out.println("no solution found");
         }else{
             System.out.println(solver.getSolutions().get(0).getMoves());
-            var solutions = solver.getSolutions().stream()
-                    .sorted(Comparator.comparingInt(s -> s.getMoves().size()))
-                    .map(PotentialGameStateWeight::getMoves).toList();
+            var solutions = solver.getSolutionsAsSortedMoveLists();
             System.out.println("sol1 size: " + solutions.get(0).size() + ", sollast size: " + solutions.get(solutions.size()-1).size());
 
             PlayingField solutionPlayingField = new PlayingField(playingField);

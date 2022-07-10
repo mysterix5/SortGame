@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,4 +54,6 @@ public class Game {
     public void reset() {
         setPosition(this.getInitialPosition());
     }
+
+
 }

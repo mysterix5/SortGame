@@ -2,10 +2,7 @@ package io.github.mysterix5.sortgame.models;
 
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @NoArgsConstructor
 public class PlayingField {
@@ -142,10 +139,51 @@ public class PlayingField {
         return Objects.hash(containers);
     }
 
-    public int hashCodeIgnoreOrder() {
+    public String permutationIgnoringIdentifier() {
         List<Container> tmp = new ArrayList<>(containers);
         Collections.sort(tmp);
-        return Objects.hash(tmp);
+        StringBuilder sb = new StringBuilder();
+        for(var cont: tmp){
+            for(var c: cont.getColorList()){
+                sb.append(c.ordinal());
+                sb.append('.');
+            }
+                sb.append('-');
+        }
+        return sb.toString();
     }
 
+    // TODO do not allow two times the same color on each other
+    // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program
+    // TODO this is probably not solvable
+    public void fillWithRandomColors(GameProperties gameProperties){
+        this.containerHeight = gameProperties.getContainerHeight();
+        this.containers = new ArrayList<>();
+        List<Color> colorChoices = new ArrayList<>();
+        gameProperties.getColors().forEach(c->{
+            for(int i = 0; i<gameProperties.getContainerHeight(); i++)
+                colorChoices.add(c);
+        });
+
+        List<Container> containers = new ArrayList<>(colorChoices.size());
+        for(int i = 0; i<gameProperties.getNColors(); i++){
+            containers.add(new Container(gameProperties.getContainerHeight()));
+        }
+        for(int i = 0; i<gameProperties.getNEmptyContainers(); i++){
+            containers.add(new Container(gameProperties.getContainerHeight()));
+        }
+
+        int containerIndex = 0;
+        var ran = new Random();
+
+        while(!colorChoices.isEmpty()){
+            Color color = colorChoices.remove(ran.nextInt(colorChoices.size()));
+            containers.get(containerIndex).addColor(color);
+            if(containers.get(containerIndex).isFull()){
+                containerIndex++;
+            }
+        }
+
+        setContainers(containers);
+    }
 }
