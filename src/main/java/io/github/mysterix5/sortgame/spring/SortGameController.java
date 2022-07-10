@@ -32,10 +32,9 @@ public class SortGameController {
     public void move(@RequestBody Move move, @PathVariable String id){
         gameService.move(id, move);
     }
-    @PutMapping("/reset")
-    public void resetGame(@RequestBody GamePutter gamePutter){
-        System.out.println(gamePutter);
-        gameService.resetGame(gamePutter.getId());
+    @PutMapping("/{id}/reset")
+    public void resetGame(@PathVariable String id){
+        gameService.resetGame(id);
     }
 
     @GetMapping("/{id}/hint")
