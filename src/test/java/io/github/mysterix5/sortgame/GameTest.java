@@ -1,11 +1,12 @@
 package io.github.mysterix5.sortgame;
 
+import io.github.mysterix5.sortgame.game.solution.PotentialGameStateWeight;
+import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import io.github.mysterix5.sortgame.models.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -94,6 +95,25 @@ class GameTest {
     }
 
 
+
+    @Test
+    void hashcodeMappingTest(){
+        int nColors = 3;
+        int height = 2;
+        int nContainers = 1;
+
+        int combinations = (int) Math.pow(nColors, nContainers*height);
+        Set<Integer> hashes = new HashSet<>();
+
+        for(int cont = 0; cont<nContainers; cont++){
+            for(int h = 0; h<height; h++){
+                // choose every color combination
+                for(int c = 0; c<nColors; c++){
+                    //TODO try some permutation stuff
+                }
+            }
+        }
+    }
     @Test
     void solve(){
         int height = 4;
@@ -107,14 +127,18 @@ class GameTest {
 
         System.out.println(playingField);
 
-        List<List<Move>> solutions;
-        solutions = StaticMethods.solve(playingField);
-        System.out.println(playingField);
+        SolverWeight solver = new SolverWeight();
+        solver.setup(playingField);
+        solver.solve(false);
+        var solutions = solver.getSolutionsAsSortedMoveLists();
+
         for(var s: solutions)
             System.out.println(s);
         System.out.println(solutionsToInitializationString(solutions));
 
-        assertThat(solutions).contains(List.of(new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(2, 0), new Move(2, 3), new Move(1, 2), new Move(1, 3), new Move(0, 1), new Move(0, 2)));
+        var sol = List.of(new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(2, 0), new Move(2, 3), new Move(1, 2), new Move(1, 3), new Move(0, 1), new Move(0, 2));
+
+        assertThat(solutions).contains(sol);
     }
 
     public String solutionsToInitializationString(List<List<Move>> solutions){
@@ -126,21 +150,6 @@ class GameTest {
         }
         return stringBuilder.toString();
     }
-
-//    @Test
-//    void solveDummyGame() {
-//        PlayingField playingField = StaticMethods.createDummyGame(new GameProperties(4, 10, 2));
-//        System.out.println(playingField);
-//
-//        List<List<Move>> solutions = StaticMethods.solve(playingField);
-//        System.out.println(playingField);
-//        for(var s: solutions){
-//            System.out.println(s);
-//        }
-//        System.out.println(solutionsToInitializationString(solutions));
-//
-//        System.out.println(playingField.toInitializationString());
-//    }
 
     @Test
     void littleTest(){
@@ -158,8 +167,14 @@ class GameTest {
         containers.add(new Container(4, new ArrayList<>(List.of())));
         playingField.setContainers(containers);
 
-        List<List<Move>> solutions = StaticMethods.solve(playingField);
-        var sol = List.of(new Move(0, 8), new Move(2, 9), new Move(5, 9), new Move(4, 5), new Move(0, 4), new Move(0, 2), new Move(2, 0), new Move(6, 9), new Move(4, 6), new Move(7, 4), new Move(5, 7), new Move(8, 2), new Move(0, 8), new Move(3, 0), new Move(3, 4), new Move(0, 3), new Move(1, 0), new Move(1, 3), new Move(0, 1), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(6, 4), new Move(5, 6), new Move(3, 5), new Move(5, 3), new Move(7, 6), new Move(1, 7), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(1, 4), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(2, 4), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(3, 1), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(5, 4), new Move(0, 5), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(0, 8));
+        SolverWeight solver = new SolverWeight();
+        solver.setup(playingField);
+        solver.solve(false);
+        var solutions = solver.getSolutionsAsSortedMoveLists();
+
+        var sol = List.of(new Move(0, 8), new Move(2, 9), new Move(5, 9), new Move(4, 5), new Move(0, 4), new Move(0, 2), new Move(2, 0), new Move(6, 9), new Move(4, 6), new Move(7, 4), new Move(5, 7), new Move(8, 2), new Move(3, 8), new Move(3, 4), new Move(3, 8), new Move(4, 3), new Move(6, 4), new Move(5, 6), new Move(3, 5), new Move(5, 3), new Move(0, 5), new Move(1, 0), new Move(1, 8), new Move(7, 6), new Move(2, 7), new Move(0, 2), new Move(1, 2));
+
+        System.out.println(solutionsToInitializationString(solutions));
 
         assertThat(solutions).contains(sol);
     }
@@ -180,97 +195,16 @@ class GameTest {
         containers.add(new Container(height, new ArrayList<>(List.of())));
         playingField.setContainers(containers);
 
-        List<List<Move>> solutions = StaticMethods.solve(playingField);
-        var sol = List.of(new Move(0, 8), new Move(0, 9), new Move(2, 9), new Move(6, 2), new Move(6, 0), new Move(8, 0), new Move(2, 8), new Move(4, 2), new Move(4, 8), new Move(3, 4), new Move(5, 3), new Move(7, 8), new Move(3, 5), new Move(7, 3), new Move(6, 7), new Move(4, 6), new Move(0, 4), new Move(1, 0), new Move(1, 7), new Move(1, 6), new Move(0, 1), new Move(2, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(3, 0), new Move(1, 3), new Move(3, 1), new Move(3, 9), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 0), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(0, 5), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(1, 4), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(2, 4), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(3, 1), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(5, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 3), new Move(0, 5), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(0, 9));
+        SolverWeight solver = new SolverWeight();
+        solver.setup(playingField);
+        solver.solve(false);
+        var solutions = solver.getSolutionsAsSortedMoveLists();
+
+        System.out.println(solutionsToInitializationString(solutions));
+        var sol = List.of(new Move(0, 8), new Move(2, 0), new Move(2, 9), new Move(6, 9), new Move(7, 9), new Move(5, 7), new Move(8, 6), new Move(5, 8), new Move(6, 5), new Move(7, 8), new Move(6, 7), new Move(3, 6), new Move(3, 8), new Move(2, 3), new Move(1, 2), new Move(1, 7), new Move(1, 6), new Move(4, 1), new Move(4, 9), new Move(4, 6), new Move(5, 4), new Move(0, 5), new Move(0, 4), new Move(0, 2), new Move(3, 0), new Move(3, 5), new Move(0, 1));
 
         assertThat(solutions).contains(sol);
     }
-
-//
-//
-//    @Test
-//    void testNewSolver() {
-//        GameProperties gameProperties = new GameProperties(4, 6, 2);
-//        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
-//        System.out.println(playingField);
-//
-//        Solver solver = new Solver();
-//        solver.setup(playingField);
-//        solver.solve();
-//        if(solver.getSolutions().isEmpty()){
-//            System.out.println("no solution found");
-//        }else{
-//            System.out.println(solver.getSolutions().get(0).getMoves());
-//            System.out.println(solver.getSolutions().get(0).getPlayingField());
-//        }
-//
-////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
-//        System.out.println("-----------");
-//        List<List<Move>> solutions = StaticMethods.solve(playingField);
-//        for(var s: solutions){
-//            System.out.println(s);
-//        }
-//
-//        System.out.println(playingField.toInitializationString());
-//    }
-//    @Test
-//    void testNewSolverDepth() {
-//        GameProperties gameProperties = new GameProperties(4, 11, 2);
-//        PlayingField playingField = StaticMethods.createDummyGame(gameProperties);
-//        System.out.println(playingField);
-//
-//        SolverDepth solver = new SolverDepth();
-//        solver.setup(playingField);
-//        solver.solve(false);
-//        if(solver.getSolutions().isEmpty()){
-//            System.out.println("no solution found");
-//        }else{
-//            System.out.println(solver.getSolutions().get(0).getMoves());
-//            System.out.println(solver.getSolutions().get(0).getPlayingField());
-//        }
-//
-////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
-////        System.out.println("-----------");
-////        List<List<Move>> solutions = StaticMethods.solve(playingField);
-////        for(var s: solutions){
-////            System.out.println(s);
-////        }
-//
-//        System.out.println(playingField.toInitializationString());
-//    }
-//    @Test
-//    void testNewSolverDepthFixedPlayingfield() {
-//        GameProperties gameProperties = new GameProperties(4, 2, 2);
-//        int height = 4;
-//        PlayingField playingField = new PlayingField(height);
-//        List<Container> containers = new ArrayList<>();
-//        containers.add(new Container(height, new ArrayList<>(List.of(Color.YELLOW, Color.RED, Color.RED, Color.YELLOW))));
-//        containers.add(new Container(height, new ArrayList<>(List.of(Color.YELLOW, Color.RED, Color.RED, Color.YELLOW))));
-//        containers.add(new Container(height, new ArrayList<>(List.of())));
-//        containers.add(new Container(height, new ArrayList<>(List.of())));
-//        playingField.setContainers(containers);
-//
-//        System.out.println(playingField);
-//
-//        SolverDepth solver = new SolverDepth();
-//        solver.setup(playingField);
-//        solver.solve(false);
-//        if(solver.getSolutions().isEmpty()){
-//            System.out.println("no solution found");
-//        }else{
-//            System.out.println(solver.getSolutions().get(0).getMoves());
-//            System.out.println(solver.getSolutions().get(0).getPlayingField());
-//        }
-//
-////        System.out.println(solutionsToInitializationString(solver.getSolutions()));
-//        System.out.println("-----------");
-//        List<List<Move>> solutions = StaticMethods.solve(playingField);
-//        for(var s: solutions){
-//            System.out.println(s);
-//        }
-//
-//        System.out.println(playingField.toInitializationString());
-//    }
 
     @Test
     public void hashcodeTest(){

@@ -1,13 +1,11 @@
 package io.github.mysterix5.sortgame.spring;
 
-import io.github.mysterix5.sortgame.game.solution.PotentialGameStateWeight;
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import io.github.mysterix5.sortgame.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +51,7 @@ public class SortGameService {
             solver.setup(playingField);
             solver.solve(false);
             if(!solver.getSolutions().isEmpty()){
-                return solver.getSolutions().get(0).getMoves().get(0);
+                return solver.getSolutionsAsSortedMoveLists().get(0).get(0);
             }
             System.out.println("no solution found");
         }
@@ -70,15 +68,10 @@ public class SortGameService {
             SolverWeight solver = new SolverWeight();
 
             solver.setup(playingField);
-            solver.solve(false);
+            solver.solve(true);
             if (solver.getSolutions().isEmpty()) {
                 System.out.println("no solution found");
             } else {
-                var solutions = solver.getSolutions().stream()
-                        .sorted(Comparator.comparingInt(s -> s.getMoves().size()))
-                        .map(PotentialGameStateWeight::getMoves).toList();
-                System.out.println("length of shortest solution: " + solutions.get(0).size() + ", longest: " + solutions.get(solutions.size() - 1).size());
-
                 Game game = new Game(gameProperties);
                 game.setPosition(playingField);
 
