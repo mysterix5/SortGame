@@ -139,12 +139,19 @@ public class PlayingField {
         return Objects.hash(containers);
     }
 
-    public int hashCodeIgnoreOrder() {
+    public String permutationIgnoringIdentifier() {
         List<Container> tmp = new ArrayList<>(containers);
         Collections.sort(tmp);
-        return Objects.hash(tmp);
+        StringBuilder sb = new StringBuilder();
+        for(var cont: tmp){
+            for(var c: cont.getColorList()){
+                sb.append(c.ordinal());
+                sb.append('.');
+            }
+                sb.append('-');
+        }
+        return sb.toString();
     }
-
 
     // TODO do not allow two times the same color on each other
     // TODO probability for same color raises on last bottles, together with the previous todo, this will even break the program

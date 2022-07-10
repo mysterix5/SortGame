@@ -6,9 +6,7 @@ import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import io.github.mysterix5.sortgame.models.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,6 +95,25 @@ class GameTest {
     }
 
 
+
+    @Test
+    void hashcodeMappingTest(){
+        int nColors = 3;
+        int height = 2;
+        int nContainers = 1;
+
+        int combinations = (int) Math.pow(nColors, nContainers*height);
+        Set<Integer> hashes = new HashSet<>();
+
+        for(int cont = 0; cont<nContainers; cont++){
+            for(int h = 0; h<height; h++){
+                // choose every color combination
+                for(int c = 0; c<nColors; c++){
+                    //TODO try some permutation stuff
+                }
+            }
+        }
+    }
     @Test
     void solve(){
         int height = 4;
@@ -113,18 +130,14 @@ class GameTest {
         SolverWeight solver = new SolverWeight();
         solver.setup(playingField);
         solver.solve(false);
-        var solutions = solver.getSolutions().stream().map(s -> s.getMoves()).sorted(Comparator.comparingInt(List::size)).toList();
+        var solutions = solver.getSolutionsAsSortedMoveLists();
 
         for(var s: solutions)
             System.out.println(s);
         System.out.println(solutionsToInitializationString(solutions));
 
         var sol = List.of(new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(2, 0), new Move(2, 3), new Move(1, 2), new Move(1, 3), new Move(0, 1), new Move(0, 2));
-        for(var m: sol){
-            System.out.println(m);
-            playingField.move(m);
-            System.out.println(playingField);
-        }
+
         assertThat(solutions).contains(sol);
     }
 
@@ -157,9 +170,9 @@ class GameTest {
         SolverWeight solver = new SolverWeight();
         solver.setup(playingField);
         solver.solve(false);
-        var solutions = solver.getSolutions().stream().map(s -> s.getMoves()).sorted(Comparator.comparingInt(List::size)).toList();
+        var solutions = solver.getSolutionsAsSortedMoveLists();
 
-        var sol = List.of(new Move(0, 8), new Move(2, 9), new Move(6, 9), new Move(0, 6), new Move(0, 2), new Move(2, 0), new Move(8, 2), new Move(3, 8), new Move(7, 3), new Move(4, 7), new Move(4, 6), new Move(3, 4), new Move(3, 8), new Move(1, 3), new Move(1, 8), new Move(1, 3), new Move(4, 1), new Move(6, 4), new Move(7, 6), new Move(2, 7), new Move(2, 3), new Move(5, 2), new Move(5, 6), new Move(1, 5), new Move(5, 1), new Move(0, 5), new Move(2, 9));
+        var sol = List.of(new Move(0, 8), new Move(2, 9), new Move(5, 9), new Move(4, 5), new Move(0, 4), new Move(0, 2), new Move(2, 0), new Move(6, 9), new Move(4, 6), new Move(7, 4), new Move(5, 7), new Move(8, 2), new Move(3, 8), new Move(3, 4), new Move(3, 8), new Move(4, 3), new Move(6, 4), new Move(5, 6), new Move(3, 5), new Move(5, 3), new Move(0, 5), new Move(1, 0), new Move(1, 8), new Move(7, 6), new Move(2, 7), new Move(0, 2), new Move(1, 2));
 
         System.out.println(solutionsToInitializationString(solutions));
 
@@ -185,10 +198,10 @@ class GameTest {
         SolverWeight solver = new SolverWeight();
         solver.setup(playingField);
         solver.solve(false);
-        var solutions = solver.getSolutions().stream().map(s -> s.getMoves()).sorted(Comparator.comparingInt(List::size)).toList();
+        var solutions = solver.getSolutionsAsSortedMoveLists();
 
         System.out.println(solutionsToInitializationString(solutions));
-        var sol = List.of(new Move(0, 8), new Move(0, 9), new Move(2, 9), new Move(6, 2), new Move(6, 0), new Move(8, 0), new Move(2, 8), new Move(4, 2), new Move(4, 8), new Move(3, 4), new Move(5, 3), new Move(7, 8), new Move(3, 5), new Move(7, 3), new Move(6, 7), new Move(4, 6), new Move(0, 4), new Move(1, 0), new Move(1, 7), new Move(1, 6), new Move(0, 1), new Move(2, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(3, 0), new Move(1, 3), new Move(3, 1), new Move(3, 9), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 0), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(0, 5), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(1, 4), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(2, 4), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(3, 1), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(4, 2), new Move(5, 2), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(4, 3), new Move(0, 4), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(0, 3), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(1, 2), new Move(0, 1), new Move(2, 0), new Move(3, 2), new Move(5, 3), new Move(0, 5), new Move(1, 0), new Move(2, 1), new Move(0, 2), new Move(1, 0), new Move(2, 1), new Move(3, 2), new Move(1, 3), new Move(0, 1), new Move(2, 0), new Move(0, 9));
+        var sol = List.of(new Move(0, 8), new Move(2, 0), new Move(2, 9), new Move(6, 9), new Move(7, 9), new Move(5, 7), new Move(8, 6), new Move(5, 8), new Move(6, 5), new Move(7, 8), new Move(6, 7), new Move(3, 6), new Move(3, 8), new Move(2, 3), new Move(1, 2), new Move(1, 7), new Move(1, 6), new Move(4, 1), new Move(4, 9), new Move(4, 6), new Move(5, 4), new Move(0, 5), new Move(0, 4), new Move(0, 2), new Move(3, 0), new Move(3, 5), new Move(0, 1));
 
         assertThat(solutions).contains(sol);
     }

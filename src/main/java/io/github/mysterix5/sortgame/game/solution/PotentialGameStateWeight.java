@@ -12,12 +12,12 @@ import java.util.List;
 public class PotentialGameStateWeight {
     private List<Move> moves;
     private List<Move> legalMoves;
-    private int state;
+    private String identifier;
 
-    public PotentialGameStateWeight(List<Move> legalMoves, List<Move> moves, int state){
+    public PotentialGameStateWeight(List<Move> legalMoves, List<Move> moves, String identifier){
         this.moves = moves;
         this.legalMoves = legalMoves;
-        this.state = state;
+        this.identifier = identifier;
     }
 
     public PotentialGameStateWeight getNextState(PlayingField playingField, Move move){
@@ -25,7 +25,7 @@ public class PotentialGameStateWeight {
         playingFieldCopy.move(move);
         List<Move> movesCopy = new ArrayList<>(moves);
         movesCopy.add(move);
-        return new PotentialGameStateWeight(playingFieldCopy.getLegalMoves(), movesCopy, playingFieldCopy.hashCodeIgnoreOrder());
+        return new PotentialGameStateWeight(playingFieldCopy.getLegalMoves(), movesCopy, playingFieldCopy.permutationIgnoringIdentifier());
     }
 
     @Override
