@@ -39,7 +39,7 @@ public class SortGameService {
     }
 
     public List<GameInfo> getAllSavedGames() {
-        return gameRepository.findAll().stream().map(g->new GameInfo(g.getId(), g.getGameProperties().getNEmptyContainers()+g.getGameProperties().getNColors(), g.getGameProperties().getNColors(), g.getInitialPosition().getContainers())).toList();
+        return gameRepository.findAll().stream().map(g->new GameInfo(g.getId(), g.getGameProperties().getNEmptyContainers()+g.getGameProperties().getNColors(), g.getGameProperties().getNColors(), g.getActualPosition().getContainers())).toList();
     }
 
     public Move getHint(String id) {
