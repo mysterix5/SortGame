@@ -36,3 +36,15 @@ The most challenging part was developing the data structures and a solving algor
 This algorithm is necessary because it is used for creating levels. 
 New levels are randomly generated and then checked for solvability.
 Also getting a hint is very important because the game can be really really hard. 
+
+When trying to solve this game the main problem is, that you can reach the same game states over and over again. 
+To manage this problem it is necessary to hash the game states that have been already visited and 
+cancel solving pathes that have been already visited. 
+It is also necessary to sort the playing field before hashing because this also excludes tons of additional permutations.
+
+Currently the solving algorithm is implemented as depth search: 
+ - There is a list of game states to be checked during the solving algorithm; starting with the initial state
+ - The legal moves are computed
+ - The game state resulting from the first legal move is added to the list. Several things are checked: 
+  - is the game won?
+  - has this state been visited before?
