@@ -1,8 +1,8 @@
 package io.github.mysterix5.sortgame.spring;
 
-import io.github.mysterix5.sortgame.models.GameCreationData;
-import io.github.mysterix5.sortgame.models.GameInfo;
-import io.github.mysterix5.sortgame.models.Move;
+import io.github.mysterix5.sortgame.models.game.GameCreationData;
+import io.github.mysterix5.sortgame.models.game.GameInfo;
+import io.github.mysterix5.sortgame.models.game.Move;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

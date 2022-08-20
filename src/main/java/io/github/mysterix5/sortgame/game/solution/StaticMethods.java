@@ -1,6 +1,9 @@
 package io.github.mysterix5.sortgame.game.solution;
 
-import io.github.mysterix5.sortgame.models.*;
+import io.github.mysterix5.sortgame.models.game.Color;
+import io.github.mysterix5.sortgame.models.game.Container;
+import io.github.mysterix5.sortgame.models.game.GameProperties;
+import io.github.mysterix5.sortgame.models.game.PlayingField;
 
 import java.util.*;
 
