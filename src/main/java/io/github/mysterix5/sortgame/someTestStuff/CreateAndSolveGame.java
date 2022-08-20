@@ -1,14 +1,12 @@
 package io.github.mysterix5.sortgame.someTestStuff;
 
-import io.github.mysterix5.sortgame.models.Color;
-import io.github.mysterix5.sortgame.models.Container;
-import io.github.mysterix5.sortgame.models.GameProperties;
-import io.github.mysterix5.sortgame.models.PlayingField;
-import io.github.mysterix5.sortgame.game.solution.PotentialGameStateWeight;
+import io.github.mysterix5.sortgame.models.game.Color;
+import io.github.mysterix5.sortgame.models.game.Container;
+import io.github.mysterix5.sortgame.models.game.GameProperties;
+import io.github.mysterix5.sortgame.models.game.PlayingField;
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class CreateAndSolveGame {

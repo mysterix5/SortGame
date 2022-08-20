@@ -2,7 +2,7 @@ package io.github.mysterix5.sortgame.spring;
 
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
-import io.github.mysterix5.sortgame.models.*;
+import io.github.mysterix5.sortgame.models.game.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

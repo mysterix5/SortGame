@@ -1,9 +1,8 @@
 package io.github.mysterix5.sortgame;
 
-import io.github.mysterix5.sortgame.game.solution.PotentialGameStateWeight;
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
-import io.github.mysterix5.sortgame.models.*;
+import io.github.mysterix5.sortgame.models.game.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
