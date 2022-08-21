@@ -1,4 +1,4 @@
-package io.github.mysterix5.sortgame.spring;
+package io.github.mysterix5.sortgame.game.service;
 
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;

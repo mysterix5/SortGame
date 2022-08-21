@@ -1,12 +1,14 @@
-package io.github.mysterix5.sortgame.spring;
+package io.github.mysterix5.sortgame.game.service;
 
 import io.github.mysterix5.sortgame.models.game.GameCreationData;
 import io.github.mysterix5.sortgame.models.game.GameInfo;
 import io.github.mysterix5.sortgame.models.game.Move;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/game")
+@Slf4j
 public class SortGameController {
     private final SortGameService gameService;
 
@@ -39,7 +42,9 @@ public class SortGameController {
     @GetMapping("/{id}/hint")
     public ResponseEntity<Move> getHint(@PathVariable String id){
         try {
-            return ResponseEntity.ok().body(gameService.getHint(id));
+            Move hint = gameService.getHint(id);
+            log.info("hint: {} -> {}", hint.getFrom(), hint.getTo());
+            return ResponseEntity.ok().body(hint);
         }catch (RuntimeException e){
             return ResponseEntity.notFound().build();
         }
@@ -50,5 +55,10 @@ public class SortGameController {
         System.out.println("CREATE GAME MAPPING");
         System.out.println(gameProperties);
         return gameService.createGame(gameProperties);
+    }
+
+    @GetMapping("/test")
+    public void test(Principal principal) {
+        log.info("principal: {}", principal.toString());
     }
 }
