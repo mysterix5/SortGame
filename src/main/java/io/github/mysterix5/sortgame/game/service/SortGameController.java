@@ -2,6 +2,7 @@ package io.github.mysterix5.sortgame.game.service;
 
 import io.github.mysterix5.sortgame.models.game.GameCreationData;
 import io.github.mysterix5.sortgame.models.game.GameInfo;
+import io.github.mysterix5.sortgame.models.game.GamesList;
 import io.github.mysterix5.sortgame.models.game.Move;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,11 @@ public class SortGameController {
     @GetMapping
     public List<GameInfo> getSavedGamesOverview(){
         return gameService.getAllSavedGames();
+    }
+
+    @GetMapping("/getall")
+    public GamesList getGamesOverview(Principal principal) {
+        return gameService.getAllGames(principal.getName());
     }
 
     @GetMapping("/{id}")
@@ -55,6 +61,11 @@ public class SortGameController {
         System.out.println("CREATE GAME MAPPING");
         System.out.println(gameProperties);
         return gameService.createGame(gameProperties);
+    }
+
+    @DeleteMapping("/deleteall")
+    public void deleteAllLevels() {
+        gameService.deleteAllLevels();
     }
 
     @GetMapping("/test")
