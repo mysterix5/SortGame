@@ -2,6 +2,7 @@ package io.github.mysterix5.sortgame.game.service;
 
 import io.github.mysterix5.sortgame.models.game.GameCreationData;
 import io.github.mysterix5.sortgame.models.game.GameInfo;
+import io.github.mysterix5.sortgame.models.game.GamesList;
 import io.github.mysterix5.sortgame.models.game.Move;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -25,24 +25,29 @@ public class SortGameController {
         return gameService.getAllSavedGames();
     }
 
-    @GetMapping("/{id}")
-    public Optional<GameInfo> getGameById(@PathVariable String id) {
-        return gameService.getGameById( id);
+    @GetMapping("/getall")
+    public GamesList getGamesOverview(Principal principal) {
+        return gameService.getAllGames(principal.getName());
     }
 
-    @PutMapping("/{id}/move")
-    public void move(@RequestBody Move move, @PathVariable String id){
-        gameService.move(id, move);
-    }
-    @PutMapping("/{id}/reset")
-    public void resetGame(@PathVariable String id){
-        gameService.resetGame(id);
+    @GetMapping("/{levelId}")
+    public GameInfo getGameById(@PathVariable String levelId, Principal principal) {
+        return gameService.getGameById(principal.getName(), levelId);
     }
 
-    @GetMapping("/{id}/hint")
-    public ResponseEntity<Move> getHint(@PathVariable String id){
+    @PutMapping("/{lvlId}/move")
+    public void move(@RequestBody Move move, @PathVariable String lvlId, Principal principal){
+        gameService.move(lvlId, principal.getName(), move);
+    }
+    @PutMapping("/{levelId}/reset")
+    public void resetGame(@PathVariable String levelId, Principal principal){
+        gameService.resetGame(principal.getName(), levelId);
+    }
+
+    @GetMapping("/{levelId}/hint")
+    public ResponseEntity<Move> getHint(@PathVariable String levelId, Principal principal){
         try {
-            Move hint = gameService.getHint(id);
+            Move hint = gameService.getHint(principal.getName(), levelId);
             log.info("hint: {} -> {}", hint.getFrom(), hint.getTo());
             return ResponseEntity.ok().body(hint);
         }catch (RuntimeException e){
@@ -55,6 +60,11 @@ public class SortGameController {
         System.out.println("CREATE GAME MAPPING");
         System.out.println(gameProperties);
         return gameService.createGame(gameProperties);
+    }
+
+    @DeleteMapping("/deleteall")
+    public void deleteAllLevels() {
+        gameService.deleteAllLevels();
     }
 
     @GetMapping("/test")

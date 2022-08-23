@@ -3,7 +3,10 @@ package io.github.mysterix5.sortgame.game.service;
 import io.github.mysterix5.sortgame.game.solution.SolverWeight;
 import io.github.mysterix5.sortgame.game.solution.StaticMethods;
 import io.github.mysterix5.sortgame.models.game.*;
+import io.github.mysterix5.sortgame.security.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,50 +14,89 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SortGameService {
     private final SortGameRepository gameRepository;
+    private final PlayerLevelsRepository playerLevelsRepository;
+    private final UserService userService;
 
-    public Optional<GameInfo> getGameById(String id) {
-        var tmp = gameRepository.findById(id);
+    public GameInfo getGameById(String username, String levelId) {
+        String userId = userService.getUserIdFromName(username);
+        Optional<StartedLevel> tmp = playerLevelsRepository.findByPlayerIdAndGameId(userId, levelId);
+        StartedLevel startedLevel;
         if (tmp.isPresent()) {
-            var g = tmp.get();
-            return Optional.of(new GameInfo(g));
+            startedLevel = tmp.get();
         } else {
-            return Optional.empty();
+            startedLevel = StartedLevel.builder()
+                    .gameId(levelId)
+                    .playerId(userId)
+                    .actualPosition(gameRepository.findById(levelId).orElseThrow().getInitialPosition())
+                    .build();
+            try {
+                playerLevelsRepository.save(startedLevel);
+            } catch (DuplicateKeyException e) {
+                log.info("catched it", e);
+                return new GameInfo(playerLevelsRepository.findByPlayerIdAndGameId(userId, levelId).orElseThrow());
+            } catch (Exception e) {
+                log.info("what is this exception", e);
+            }
         }
+        return new GameInfo(startedLevel);
     }
 
-    public void move(String id, Move move) {
-        Optional<Game> game = gameRepository.findById(id);
-        if(game.isPresent()){
-            game.get().getActualPosition().move(move);
-            gameRepository.save(game.get());
-        }
+    public void move(String lvlId, String username, Move move) {
+        String userId = userService.getUserIdFromName(username);
+        var lvl = playerLevelsRepository.findByPlayerIdAndGameId(userId, lvlId).orElseThrow();
+        System.out.println(lvl);
+        lvl.getActualPosition().move(move);
+        playerLevelsRepository.save(lvl);
     }
 
-    public void resetGame(String id) {
-        var game = gameRepository.findById(id);
-        game.ifPresent(Game::reset);
-        game.ifPresent(gameRepository::save);
+    public void resetGame(String username, String id) {
+        String userId = userService.getUserIdFromName(username);
+        Game game = gameRepository.findById(id).orElseThrow();
+        StartedLevel playerLevel = playerLevelsRepository.findByPlayerIdAndGameId(userId, id).orElseThrow();
+        playerLevel.setActualPosition(game.getInitialPosition());
+        playerLevelsRepository.save(playerLevel);
     }
 
     public List<GameInfo> getAllSavedGames() {
-        return gameRepository.findAll().stream().map(g->new GameInfo(g.getId(), g.getGameProperties().getNEmptyContainers()+g.getGameProperties().getNColors(), g.getGameProperties().getNColors(), g.getActualPosition().getContainers())).toList();
+        return gameRepository.findAll().stream().map(GameInfo::new).toList();
     }
 
-    public Move getHint(String id) {
-        Optional<Game> game = gameRepository.findById(id);
-        if(game.isPresent()) {
-            PlayingField playingField = game.get().getActualPosition();
-            SolverWeight solver = new SolverWeight();
+    public GamesList getAllGames(String username) {
+        List<Game> allLevels = gameRepository.findAll();
+        String userId = userService.getUserIdFromName(username);
+        List<StartedLevel> playerLevels = playerLevelsRepository.findByPlayerId(userId);
+        List<String> startedLvlIds = playerLevels.stream().map(StartedLevel::getGameId).toList();
+        var gamesList = new GamesList();
+        gamesList.setNewLevels(
+                allLevels.stream()
+                        .filter(game -> !startedLvlIds.contains(game.getId()))
+                        .map(GameInfo::new).toList());
+        gamesList.setStartedLevels(
+                playerLevels.stream()
+                        .filter(g -> !g.getActualPosition().isWon())
+                        .map(GameInfo::new).toList()
+        );
+        gamesList.setFinishedLevels(
+                playerLevels.stream()
+                        .filter(g -> g.getActualPosition().isWon())
+                        .map(GameInfo::new).toList()
+        );
+        return gamesList;
+    }
 
-            solver.setup(playingField);
-            solver.solve(false);
-            if(!solver.getSolutions().isEmpty()){
-                return solver.getSolutionsAsSortedMoveLists().get(0).get(0);
-            }
-            System.out.println("no solution found");
+    public Move getHint(String username, String levelId) {
+        String userId = userService.getUserIdFromName(username);
+        var lvl = playerLevelsRepository.findByPlayerIdAndGameId(userId, levelId).orElseThrow();
+        SolverWeight solver = new SolverWeight();
+        solver.setup(lvl.getActualPosition());
+        solver.solve(false);
+        if (!solver.getSolutions().isEmpty()) {
+            return solver.getSolutionsAsSortedMoveLists().get(0).get(0);
         }
+        System.out.println("no solution found");
         throw new RuntimeException();
     }
 
@@ -81,4 +123,10 @@ public class SortGameService {
             }
         }
     }
+
+    public void deleteAllLevels() {
+        gameRepository.deleteAll();
+        playerLevelsRepository.deleteAll();
+    }
+
 }

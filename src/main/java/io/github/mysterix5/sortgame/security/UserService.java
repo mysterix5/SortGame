@@ -63,6 +63,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public String getUserIdFromName(String username) {
+        var user = findByUsername(username).orElseThrow();
+        return user.getId();
+    }
+
     private boolean isUsername(String username) {
         String usernameRegex = "^(?=.{3,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$";
         return username.matches(usernameRegex);
