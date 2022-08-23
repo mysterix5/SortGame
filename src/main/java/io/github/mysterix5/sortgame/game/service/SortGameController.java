@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -31,24 +30,24 @@ public class SortGameController {
         return gameService.getAllGames(principal.getName());
     }
 
-    @GetMapping("/{id}")
-    public Optional<GameInfo> getGameById(@PathVariable String id) {
-        return gameService.getGameById( id);
+    @GetMapping("/{levelId}")
+    public GameInfo getGameById(@PathVariable String levelId, Principal principal) {
+        return gameService.getGameById(principal.getName(), levelId);
     }
 
-    @PutMapping("/{id}/move")
-    public void move(@RequestBody Move move, @PathVariable String id){
-        gameService.move(id, move);
+    @PutMapping("/{lvlId}/move")
+    public void move(@RequestBody Move move, @PathVariable String lvlId, Principal principal){
+        gameService.move(lvlId, principal.getName(), move);
     }
-    @PutMapping("/{id}/reset")
-    public void resetGame(@PathVariable String id){
-        gameService.resetGame(id);
+    @PutMapping("/{levelId}/reset")
+    public void resetGame(@PathVariable String levelId, Principal principal){
+        gameService.resetGame(principal.getName(), levelId);
     }
 
-    @GetMapping("/{id}/hint")
-    public ResponseEntity<Move> getHint(@PathVariable String id){
+    @GetMapping("/{levelId}/hint")
+    public ResponseEntity<Move> getHint(@PathVariable String levelId, Principal principal){
         try {
-            Move hint = gameService.getHint(id);
+            Move hint = gameService.getHint(principal.getName(), levelId);
             log.info("hint: {} -> {}", hint.getFrom(), hint.getTo());
             return ResponseEntity.ok().body(hint);
         }catch (RuntimeException e){

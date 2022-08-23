@@ -19,6 +19,7 @@ public class GameProperties {
         if(nColors<=1 || nColors >Color.values().length){
             throw new RuntimeException("choose between 2 and " + Color.values().length + " colors for your game.");
         }
+        // TODO more checks
         colors.addAll(Arrays.stream(Color.values()).toList().subList(0,nColors));
     }
 

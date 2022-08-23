@@ -11,14 +11,15 @@ import java.util.List;
 @NoArgsConstructor
 public class GameInfo {
     private String id;
-    private int totalContainers;
-    private int colors;
     private List<Container> playingField;
 
     public GameInfo(Game game){
         this.id = game.getId();
-        this.totalContainers = game.getGameProperties().getNEmptyContainers() + game.getGameProperties().getNColors();
-        this.colors = game.getGameProperties().getNColors();
         this.playingField = game.getActualPosition().getContainers();
+    }
+
+    public GameInfo(StartedLevel startedLevel) {
+        this.id = startedLevel.getGameId();
+        this.playingField = startedLevel.getActualPosition().getContainers();
     }
 }
