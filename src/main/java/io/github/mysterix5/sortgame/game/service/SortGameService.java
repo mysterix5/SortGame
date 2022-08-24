@@ -20,8 +20,7 @@ public class SortGameService {
     private final PlayerLevelsRepository playerLevelsRepository;
     private final UserService userService;
 
-    public GameInfo getGameById(String username, String levelId) {
-        String userId = userService.getUserIdFromName(username);
+    public GameInfo getGameById(String userId, String levelId) {
         Optional<StartedLevel> tmp = playerLevelsRepository.findByPlayerIdAndGameId(userId, levelId);
         StartedLevel startedLevel;
         if (tmp.isPresent()) {
