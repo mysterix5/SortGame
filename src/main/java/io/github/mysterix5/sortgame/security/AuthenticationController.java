@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Slf4j
