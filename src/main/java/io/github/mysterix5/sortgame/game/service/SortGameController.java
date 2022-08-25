@@ -40,7 +40,7 @@ public class SortGameController {
         log.info("claims: {}", claims);
         String userId = (String) claims.get("userid");
         log.info("id: {}", userId);
-        return gameService.getGameById(userId, levelId);
+        return gameService.getGameById(principal.getName(), levelId);
     }
 
     @PutMapping("/{lvlId}/move")
@@ -65,6 +65,7 @@ public class SortGameController {
 
     @PostMapping("/create")
     public GameInfo createGame(@RequestBody GameCreationData gameProperties){
+        // TODO add check if user finished all levels
         System.out.println("CREATE GAME MAPPING");
         System.out.println(gameProperties);
         return gameService.createGame(gameProperties);

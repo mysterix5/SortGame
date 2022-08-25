@@ -43,16 +43,14 @@ public class SortGameService {
         return new GameInfo(startedLevel);
     }
 
-    public void move(String lvlId, String username, Move move) {
-        String userId = userService.getUserIdFromName(username);
+    public void move(String lvlId, String userId, Move move) {
         var lvl = playerLevelsRepository.findByPlayerIdAndGameId(userId, lvlId).orElseThrow();
         System.out.println(lvl);
         lvl.getActualPosition().move(move);
         playerLevelsRepository.save(lvl);
     }
 
-    public void resetGame(String username, String id) {
-        String userId = userService.getUserIdFromName(username);
+    public void resetGame(String userId, String id) {
         Game game = gameRepository.findById(id).orElseThrow();
         StartedLevel playerLevel = playerLevelsRepository.findByPlayerIdAndGameId(userId, id).orElseThrow();
         playerLevel.setActualPosition(game.getInitialPosition());
@@ -63,9 +61,8 @@ public class SortGameService {
         return gameRepository.findAll().stream().map(GameInfo::new).toList();
     }
 
-    public GamesList getAllGames(String username) {
+    public GamesList getAllGames(String userId) {
         List<Game> allLevels = gameRepository.findAll();
-        String userId = userService.getUserIdFromName(username);
         List<StartedLevel> playerLevels = playerLevelsRepository.findByPlayerId(userId);
         List<String> startedLvlIds = playerLevels.stream().map(StartedLevel::getGameId).toList();
         var gamesList = new GamesList();
@@ -86,8 +83,7 @@ public class SortGameService {
         return gamesList;
     }
 
-    public Move getHint(String username, String levelId) {
-        String userId = userService.getUserIdFromName(username);
+    public Move getHint(String userId, String levelId) {
         var lvl = playerLevelsRepository.findByPlayerIdAndGameId(userId, levelId).orElseThrow();
         SolverWeight solver = new SolverWeight();
         solver.setup(lvl.getActualPosition());
