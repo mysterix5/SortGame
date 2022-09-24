@@ -2,17 +2,18 @@ name: Auto Assign to Project(s)
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened]
 env:
   MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
 jobs:
   assign_one_project:
     runs-on: ubuntu-latest
-    name: Assign to One Project
+    name: Assign to Project
     steps:
-    - name: Assign NEW issues and NEW pull requests to project ChickenSort
+    - name: Assign NEW issues to project
       uses: srggrs/assign-one-project-github-action@1.2.1
       if: github.event.action == 'opened'
       with:
-        project: 'https://github.com/users/mysterix5/projects/2'
+        project: 'https://github.com/users/mysterix5/projects/3'
+        column_name: 'Backlog'
