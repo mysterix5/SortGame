@@ -1,5 +1,5 @@
 # SortGame
-
+ 
 <img src="https://user-images.githubusercontent.com/28150646/184842252-de289b17-2301-425d-ab79-34ee07dde39a.gif">
 
 This game is not really finished. 
