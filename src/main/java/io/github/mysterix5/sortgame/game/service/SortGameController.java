@@ -4,6 +4,8 @@ import io.github.mysterix5.sortgame.models.game.GameCreationData;
 import io.github.mysterix5.sortgame.models.game.GameInfo;
 import io.github.mysterix5.sortgame.models.game.GamesList;
 import io.github.mysterix5.sortgame.models.game.Move;
+import io.github.mysterix5.sortgame.security.JwtService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.List;
 @Slf4j
 public class SortGameController {
     private final SortGameService gameService;
+    private final JwtService jwtService;
 
     @GetMapping
     public List<GameInfo> getSavedGamesOverview(){
@@ -31,7 +34,12 @@ public class SortGameController {
     }
 
     @GetMapping("/{levelId}")
-    public GameInfo getGameById(@PathVariable String levelId, Principal principal) {
+    public GameInfo getGameById(@PathVariable String levelId, Principal principal, @RequestHeader (name="Authorization") String token) {
+        log.info("token: {}", token.split(" ")[1]);
+        Claims claims = jwtService.extractAllClaims(token.split(" ")[1]);
+        log.info("claims: {}", claims);
+        String userId = (String) claims.get("userid");
+        log.info("id: {}", userId);
         return gameService.getGameById(principal.getName(), levelId);
     }
 
@@ -57,6 +65,7 @@ public class SortGameController {
 
     @PostMapping("/create")
     public GameInfo createGame(@RequestBody GameCreationData gameProperties){
+        // TODO add check if user finished all levels
         System.out.println("CREATE GAME MAPPING");
         System.out.println(gameProperties);
         return gameService.createGame(gameProperties);

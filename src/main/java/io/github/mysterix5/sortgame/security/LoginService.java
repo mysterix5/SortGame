@@ -22,7 +22,7 @@ public class LoginService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginData.getUsername(), loginData.getPassword()));
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", user.getRoles());
-        claims.put("userid", user.getId());
-        return new LoginResponse(jwtService.createJwt(claims, user.getUsername()));
+        claims.put("username", user.getUsername());
+        return new LoginResponse(jwtService.createJwt(claims, user.getId()));
     }
 }

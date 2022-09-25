@@ -3,13 +3,15 @@
 <img src="https://user-images.githubusercontent.com/28150646/184842252-de289b17-2301-425d-ab79-34ee07dde39a.gif">
 
 This game is not really finished. 
-At the moment all players play the same game status, meaning all players see the same moves. 
-Nothing happens when a game is won. 
-Players can get a hint but it is not properly displayed. 
-At the end of the technical part there is description of the planned next steps. 
+I implemented user login and playing recently (before all players played/saw the same moves).
+But there is still much work to do: 
+- no links in header for login, register, logout
+- expired token not handled
+- Nothing happens when a game is won. 
+- Players can get a hint, but it is not properly displayed. 
 
 ## Usage guide
-I recreated a popular game i like to play on mobile myself. 
+I recreated a popular game I like to play on mobile myself. 
 It is called water color sort or something similar there. 
 This version is of course without ads. 
 The game is simple: click two containers, the first to move away from and the second as target. 
