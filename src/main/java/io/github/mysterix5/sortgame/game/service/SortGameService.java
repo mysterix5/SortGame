@@ -61,14 +61,24 @@ public class SortGameService {
         return gameRepository.findAll().stream().map(GameInfo::new).toList();
     }
 
-    public GamesList getAllGames(String userId) {
+    public GamesList getAllGames(String userId, int site) {
         List<Game> allLevels = gameRepository.findAll();
         List<StartedLevel> playerLevels = playerLevelsRepository.findByPlayerId(userId);
+
+        int size = 10;
+//        Pageable paging = PageRequest.of(0, 5);
+//        var newLevelPage = gameRepository.findAll(paging);
+////        var newLevelPage = gameRepository.findByIdIsNotIn(playerLevels.stream().map(g -> g.getGameId()).toList(), paging);
+//        log.info("print paginated levels");
+//        newLevelPage.get().forEach(x->log.info("gameid: {}, started: {}", x.getId(), playerLevels.stream().filter(y->y.getGameId()==x.getId()).count()>0));
+
         List<String> startedLvlIds = playerLevels.stream().map(StartedLevel::getGameId).toList();
         var gamesList = new GamesList();
         gamesList.setNewLevels(
                 allLevels.stream()
                         .filter(game -> !startedLvlIds.contains(game.getId()))
+                        .skip(site*size)
+                        .limit(size)
                         .map(GameInfo::new).toList());
         gamesList.setStartedLevels(
                 playerLevels.stream()
